@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="371.0" prefWidth="602.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddAppointment">
+   <children>
+       <Label layoutX="29.0" layoutY="28.0" text="Add Customer" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect></Label>
+      <Button layoutX="29.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Appointment ID">
+         <font>
+            <Font name="Microsoft Sans Serif" size="12.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+       <Button layoutX="29.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Title">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="160.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Location">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="128.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Description">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="194.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Contact">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="470.0" layoutY="374.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Save">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="343.0" layoutY="374.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Cancel">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+      <TextField layoutX="151.0" layoutY="62.0" />
+      <TextField layoutX="151.0" layoutY="95.0" />
+      <TextField layoutX="151.0" layoutY="128.0" />
+      <TextField layoutX="151.0" layoutY="160.0" />
+      <TextField layoutX="151.0" layoutY="194.0" />
+      <Line endX="363.0" endY="-203.0" layoutX="226.0" layoutY="279.0" startX="-216.0" startY="112.0" />
+      <Line endX="296.0" endY="157.70709228515625" layoutX="29.0" layoutY="234.0" startX="-19.70709228515625" startY="-0.5" />
+      <Line endX="-266.0" endY="390.79290771484375" layoutX="458.0" layoutY="14.0" startX="-5.0" startY="-6.0" />
+   </children>
+</AnchorPane>

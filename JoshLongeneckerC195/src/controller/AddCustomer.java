@@ -23,7 +23,7 @@ public class AddCustomer implements Initializable {
     public void MainMenu (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 1200, 500);
         stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();

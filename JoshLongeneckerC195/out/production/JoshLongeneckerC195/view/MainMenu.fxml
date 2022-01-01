@@ -6,9 +6,9 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="490.0" prefWidth="777.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-border-radius: 20; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenu">
+<AnchorPane prefHeight="492.0" prefWidth="1108.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-border-radius: 20; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenu">
    <children>
-      <Label layoutX="29.0" layoutY="28.0" text="Main Menu" textFill="AQUAMARINE">
+      <Label layoutX="19.0" layoutY="28.0" text="Main Menu" textFill="AQUAMARINE">
          <font>
             <Font name="Microsoft Sans Serif" size="24.0" />
          </font>
@@ -16,7 +16,7 @@
             <DropShadow />
          </effect>
       </Label>
-      <Button layoutX="24.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Appointment">
+      <Button layoutX="14.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Appointment">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -24,7 +24,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button id="button" layoutX="24.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Appointment">
+      <Button id="button" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Appointment">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -32,7 +32,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button layoutX="24.0" layoutY="126.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
+      <Button layoutX="14.0" layoutY="126.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -40,7 +40,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button layoutX="25.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Appointment">
+      <Button layoutX="14.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Generate Reports">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -48,7 +48,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button id="button" layoutX="25.0" layoutY="191.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Appointment">
+      <Button id="button" layoutX="14.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Appointment">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -56,7 +56,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button fx:id="addCustomer" layoutX="25.0" layoutY="222.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
+      <Button fx:id="addCustomer" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -64,7 +64,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button fx:id="logout" layoutX="24.0" layoutY="452.0" mnemonicParsing="false" onAction="#toLogin" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="logout">
+      <Button fx:id="logout" layoutX="15.0" layoutY="452.0" mnemonicParsing="false" onAction="#toLogin" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="logout">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -72,14 +72,18 @@
             <DropShadow />
          </effect>
       </Button>
-      <TableView layoutX="179.0" layoutY="64.0" prefHeight="413.0" prefWidth="575.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: black; -fx-background-radius: 8;">
+      <TableView fx:id="AppointmentTable" layoutX="164.0" layoutY="64.0" prefHeight="413.0" prefWidth="928.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
         <columns>
-          <TableColumn prefWidth="75.0" text="Apt ID" />
-          <TableColumn prefWidth="95.0" text="Customer" />
-            <TableColumn prefWidth="81.0" text="Column X" />
-            <TableColumn prefWidth="94.0" text="Column X" />
-            <TableColumn prefWidth="109.0" text="Column X" />
-            <TableColumn prefWidth="116.0" text="Column X" />
+          <TableColumn fx:id="aptID" prefWidth="106.0" text="Appointment_ID" />
+          <TableColumn fx:id="title" prefWidth="94.0" text="Title" />
+            <TableColumn fx:id="description" prefWidth="93.0" text="Description" />
+            <TableColumn fx:id="location" prefWidth="74.0" text="Location" />
+            <TableColumn fx:id="contact" prefWidth="54.0" text="Contact" />
+            <TableColumn fx:id="type" prefWidth="47.0" text="Type" />
+            <TableColumn fx:id="start" prefWidth="113.0" text="Start Date &amp; Time" />
+            <TableColumn fx:id="end" prefWidth="110.0" text="End Date &amp; Time" />
+            <TableColumn fx:id="custID" prefWidth="89.0" text="Customer_ID" />
+            <TableColumn fx:id="userID" prefWidth="55.0" text="User_ID" />
         </columns>
          <effect>
             <DropShadow />
@@ -88,7 +92,7 @@
       <RadioButton layoutX="349.0" layoutY="34.0" mnemonicParsing="false" text="Week" />
       <RadioButton layoutX="285.0" layoutY="34.0" mnemonicParsing="false" text="Month" />
       <RadioButton layoutX="241.0" layoutY="34.0" mnemonicParsing="false" text="All" />
-      <Label layoutX="607.0" layoutY="28.0" text="Appointments" textFill="AQUAMARINE">
+      <Label layoutX="945.0" layoutY="29.0" text="Appointments" textFill="AQUAMARINE">
          <font>
             <Font name="Microsoft Sans Serif" size="24.0" />
          </font>
@@ -96,13 +100,13 @@
             <DropShadow />
          </effect>
       </Label>
-      <Line endX="-2.0" endY="-5.0" layoutX="169.0" layoutY="16.0" startX="-2.0" startY="462.0" />
+      <Line endX="-2.0" endY="-5.0" layoutX="154.0" layoutY="17.0" startX="-2.0" startY="462.0" />
       <Label layoutX="187.0" layoutY="35.0" text="Filter By:">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
       </Label>
-      <DatePicker layoutX="411.0" layoutY="30.0" />
+      <DatePicker layoutX="762.0" layoutY="29.0" />
 
    </children>
 </AnchorPane>

@@ -41,7 +41,6 @@ public class Login implements Initializable {
     }
     @FXML
     private void onLogin(ActionEvent event) throws IOException, SQLException {
-        String query = "SELECT * FROM users;";
         String user = username.getText();
         String pass = password.getText();
         boolean userExists = loginVerification(user, pass);
