@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="490.0" prefWidth="777.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-border-radius: 20; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenu">
+<AnchorPane prefHeight="490.0" prefWidth="777.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-border-radius: 20; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenu">
    <children>
       <Label layoutX="29.0" layoutY="28.0" text="Main Menu" textFill="AQUAMARINE">
          <font>
@@ -56,7 +56,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button layoutX="25.0" layoutY="222.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
+      <Button fx:id="addCustomer" layoutX="25.0" layoutY="222.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
