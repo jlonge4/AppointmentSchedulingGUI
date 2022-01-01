@@ -32,7 +32,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button layoutX="14.0" layoutY="126.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
+      <Button layoutX="14.0" layoutY="126.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -48,15 +48,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button id="button" layoutX="14.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Appointment">
-         <font>
-            <Font name="Microsoft Sans Serif" size="12.0" />
-         </font>
-         <effect>
-            <DropShadow />
-         </effect>
-      </Button>
-      <Button fx:id="addCustomer" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Customer">
+      <Button layoutX="14.0" layoutY="157.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -72,7 +64,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <TableView fx:id="AppointmentTable" layoutX="164.0" layoutY="64.0" prefHeight="413.0" prefWidth="928.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
+      <TableView fx:id="AppointmentTable" layoutX="164.0" layoutY="64.0" prefHeight="157.0" prefWidth="928.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
         <columns>
           <TableColumn fx:id="aptID" prefWidth="106.0" text="Appointment_ID" />
           <TableColumn fx:id="title" prefWidth="94.0" text="Title" />
@@ -85,6 +77,18 @@
             <TableColumn fx:id="custID" prefWidth="89.0" text="Customer_ID" />
             <TableColumn fx:id="userID" prefWidth="55.0" text="User_ID" />
         </columns>
+         <effect>
+            <DropShadow />
+         </effect>
+      </TableView>
+      <TableView fx:id="CustomersTable" layoutX="164.0" layoutY="273.0" prefHeight="157.0" prefWidth="928.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
+         <columns>
+            <TableColumn fx:id="customerID" prefWidth="106.0" text="Customer_ID" />
+            <TableColumn fx:id="name" prefWidth="157.0" text="Customer_Name" />
+            <TableColumn fx:id="address" prefWidth="168.0" text="Address" />
+            <TableColumn fx:id="postalCode" minWidth="0.0" prefWidth="114.0" text="Postal Code" />
+            <TableColumn fx:id="phone" prefWidth="170.0" text="Phone" />
+         </columns>
          <effect>
             <DropShadow />
          </effect>

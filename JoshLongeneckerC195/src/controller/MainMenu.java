@@ -33,6 +33,12 @@ public class MainMenu implements Initializable {
     public TableColumn userID;
     public TableView AppointmentTable;
     public ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    public TableView CustomersTable;
+    public TableColumn name;
+    public TableColumn address;
+    public TableColumn postalCode;
+    public TableColumn phone;
+    public TableColumn customerID;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,8 +50,15 @@ public class MainMenu implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        CustomersTable.getItems().clear();
+        try{
+            CustomersTable.setItems(Data.getAllCustomers());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
 
+        /**Appointment Table*/
         aptID.setCellValueFactory(new PropertyValueFactory<>("id"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -56,6 +69,15 @@ public class MainMenu implements Initializable {
         end.setCellValueFactory(new PropertyValueFactory<>("end"));
         custID.setCellValueFactory(new PropertyValueFactory<>("custId"));
         userID.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+        /**Customers Table*/
+        customerID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+
 
 
 
