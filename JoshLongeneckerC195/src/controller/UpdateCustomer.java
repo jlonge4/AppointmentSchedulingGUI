@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,67 +13,48 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
 import model.Data;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class AddCustomer implements Initializable {
+public class UpdateCustomer implements Initializable {
 
     public TextField customerId;
     public TextField customerName;
     public TextField customerAddress;
     public TextField customerPostalCode;
     public TextField customerPhone;
-    public Customer customer;
+    public TextField customerCity;
+    private static Customer customerOld;
+    private Customer customerNew;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Add Customer");
-        Customer customer = null;
-        try {
-            customer = new Customer(randomId(),"name","address","postalCode","phone", 1234);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        System.out.println(customer.getId());
+        System.out.println("Update Customer");
+
+        customerOld = MainMenu.getSelectedCustomer();
+
+        customerId.setText(Integer.toString(customerOld.getId()));
+        customerName.setText(customerOld.getName());
+        customerAddress.setText(customerOld.getAddress());
+        customerPostalCode.setText(customerOld.getPostalCode());
+        customerPhone.setText(customerOld.getPhone());
+        customerCity.setText(Integer.toString(customerOld.getCity()));
+
+
 
     }
 
-    public void MainMenu (ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1200, 500);
-        stage.setTitle("Main Menu");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public int increaseCount(int count) {
-        count ++;
-        return count;
-    }
-
-    public int randomId() throws SQLException {
-        AtomicInteger randomId = new AtomicInteger(increaseCount(Data.getAllCustomers().size()));
-        Data.getAllCustomers().forEach((item) -> {
-            if (item.getId() == randomId.get()) {
-                randomId.addAndGet(1);
-            };
-
-        });
-        return randomId.get();
-    }
-
-    public void onCustomerSave(ActionEvent event) throws SQLException, IOException {
-        System.out.println("Saved customer");
-        int id = randomId();
+    public void onSave (ActionEvent actionEvent) throws IOException, SQLException {
+        int id = customerOld.getId();
         String name = "";
         String address = "";
         String postalCode = "";
         String phone = "";
-        int city = 22;
+        int city = 0;
 
         try {
             name = customerName.getText();
@@ -105,20 +88,32 @@ public class AddCustomer implements Initializable {
             alert.setContentText("please fill in or correct the customer name text field");
             alert.showAndWait();
         }
+        try {
+            city = Integer.parseInt(customerCity.getText());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("please fill in or correct the customer name text field");
+            alert.showAndWait();
+        }
 
-        Customer customer = new Customer(id,name,address,postalCode,phone,city);
-//        try {
-            Data.addCustomer(customer);
+        customerNew = new Customer(id,name,address,postalCode,phone,city);
+        Data.removeCustomer(customerOld);
+        Data.addCustomer(customerNew);
 
-            MainMenu(event);
-//        } catch (Exception e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Add Failed");
-//            alert.setContentText("Invalid Customer");
-//            alert.showAndWait();
-//        }
-
-
+        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1200, 500);
+        stage.setTitle("Main Menu");
+        stage.setScene(scene);
+        stage.show();
     }
-
+    public void MainMenu (ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1200, 500);
+        stage.setTitle("Main Menu");
+        stage.setScene(scene);
+        stage.show();
+    }
 }

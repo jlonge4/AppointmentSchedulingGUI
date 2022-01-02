@@ -31,13 +31,13 @@ public class MainMenu implements Initializable {
     public TableColumn custID;
     public TableColumn userID;
     public TableView AppointmentTable;
-    public ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     public TableView CustomersTable;
     public TableColumn name;
     public TableColumn address;
     public TableColumn postalCode;
     public TableColumn phone;
     public TableColumn customerID;
+    private static Customer selectedCustomer = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,7 +49,7 @@ public class MainMenu implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        CustomersTable.getItems().clear();
+//            CustomersTable.getItems().clear();
         try{
             CustomersTable.setItems(Data.getAllCustomers());
         } catch (SQLException throwables) {
@@ -100,7 +100,7 @@ public class MainMenu implements Initializable {
         if (customer!=null) {
             Alert alertA = new Alert(Alert.AlertType.ERROR);
             alertA.setTitle("Selection Error");
-            alertA.setContentText("Are you sure you want to delete a customer?");
+            alertA.setContentText("Are you sure you want to delete this customer?");
             alertA.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     try {
@@ -117,10 +117,24 @@ public class MainMenu implements Initializable {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Selection Error");
-            alert.setContentText("Please select a part to delete");
+            alert.setContentText("Please select a customer to delete");
             alert.showAndWait();
         }
         CustomersTable.setItems(Data.getAllCustomers());
+    }
+
+    public static Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    public void updateCustomer (ActionEvent actionEvent) throws IOException {
+        selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+        Parent root = FXMLLoader.load(getClass().getResource("/view/UpdateCustomer.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 700, 500);
+        stage.setTitle("addCustomer");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
