@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import utilities.JDBC;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
@@ -24,10 +26,23 @@ public class Login implements Initializable {
     public Button login;
     public TextField username;
     public TextField password;
+    public Label location;
+    public Button user;
+    public Button pass;
+    public Label signIn;
+    private String loginFailed;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("It works");
+        Locale locate = Locale.getDefault();
+        ResourceBundle rb = ResourceBundle.getBundle("languageFiles/rb" , locate);
+        location.setText(String.valueOf(locate));
+        user.setText(rb.getString("username"));
+        pass.setText(rb.getString("password"));
+        login.setText(rb.getString("login"));
+        signIn.setText(rb.getString("signin"));
+        loginFailed=(rb.getString("loginFailed"));
 
     }
 
@@ -55,8 +70,8 @@ public class Login implements Initializable {
         } else {
             System.out.println("Login Failed");
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Login Failed");
-            alert.setContentText("Login Failed");
+            alert.setTitle(loginFailed);
+            alert.setContentText(loginFailed);
             alert.showAndWait();
         }
     }

@@ -93,9 +93,12 @@
             <DropShadow />
          </effect>
       </TableView>
-      <RadioButton layoutX="349.0" layoutY="34.0" mnemonicParsing="false" text="Week" />
-      <RadioButton layoutX="285.0" layoutY="34.0" mnemonicParsing="false" text="Month" />
-      <RadioButton layoutX="241.0" layoutY="34.0" mnemonicParsing="false" text="All" />
+      <RadioButton fx:id="week" layoutX="349.0" layoutY="34.0" mnemonicParsing="false" text="Week">
+         <toggleGroup>
+            <ToggleGroup fx:id="group" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="month" layoutX="285.0" layoutY="34.0" mnemonicParsing="false" text="Month" toggleGroup="$group" />
+      <RadioButton fx:id="all" layoutX="241.0" layoutY="34.0" mnemonicParsing="false" selected="true" text="All" toggleGroup="$group" />
       <Label layoutX="945.0" layoutY="29.0" text="Appointments" textFill="AQUAMARINE">
          <font>
             <Font name="Microsoft Sans Serif" size="24.0" />
@@ -109,6 +112,14 @@
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
+      </Label>
+      <Label layoutX="973.0" layoutY="239.0" text="Customers" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
       </Label>
       <DatePicker layoutX="762.0" layoutY="29.0" />
 
