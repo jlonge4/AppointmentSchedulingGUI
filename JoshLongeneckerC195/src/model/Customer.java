@@ -6,13 +6,17 @@ public class Customer {
         private String address;
         private String postalCode;
         private String phone;
+        private int city;
 
-    public Customer(int id, String name, String address, String postalCode, String phone) {
+
+
+    public Customer(int id, String name, String address, String postalCode, String phone, int city) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
+        this.city = city;
     }
 
     public int getId() {
@@ -52,6 +56,14 @@ public class Customer {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getCity() {
+        return city;
+    }
+
+    public void setCity(int city) {
+        this.city = city;
     }
 
 

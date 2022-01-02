@@ -7,12 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Customer;
 import model.Data;
 
 import java.io.IOException;
@@ -77,13 +76,6 @@ public class MainMenu implements Initializable {
         postalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
-
-
-
-
-
-
-
     }
 
     public void toLogin (ActionEvent actionEvent) throws IOException {
@@ -101,6 +93,34 @@ public class MainMenu implements Initializable {
         stage.setTitle("addCustomer");
         stage.setScene(scene);
         stage.show();
+    }
+    public void removeCustomer() throws SQLException {
+        Customer customer;
+        customer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+        if (customer!=null) {
+            Alert alertA = new Alert(Alert.AlertType.ERROR);
+            alertA.setTitle("Selection Error");
+            alertA.setContentText("Are you sure you want to delete a customer?");
+            alertA.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    try {
+                        Data.removeCustomer(customer);
+                    } catch (Exception e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Selection Error");
+                        alert.setContentText("Please verify customer has no appointments or select a customer");
+                        alert.showAndWait();
+                    }
+                }
+            });
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Selection Error");
+            alert.setContentText("Please select a part to delete");
+            alert.showAndWait();
+        }
+        CustomersTable.setItems(Data.getAllCustomers());
     }
 
 

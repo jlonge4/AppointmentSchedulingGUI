@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="371.0" prefWidth="602.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomer">
@@ -55,7 +54,7 @@
                <DropShadow />
            </effect>
        </Button>
-       <Button layoutX="470.0" layoutY="374.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Save">
+       <Button layoutX="470.0" layoutY="374.0" mnemonicParsing="false" onAction="#onCustomerSave" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Save">
            <font>
                <Font name="Microsoft Sans Serif" size="12.0" />
            </font>
@@ -71,13 +70,19 @@
                <DropShadow />
            </effect>
        </Button>
-      <TextField layoutX="151.0" layoutY="62.0" />
-      <TextField layoutX="151.0" layoutY="95.0" />
-      <TextField layoutX="151.0" layoutY="128.0" />
-      <TextField layoutX="151.0" layoutY="160.0" />
-      <TextField layoutX="151.0" layoutY="194.0" />
-      <Line endX="363.0" endY="-203.0" layoutX="226.0" layoutY="279.0" startX="-216.0" startY="112.0" />
-      <Line endX="296.0" endY="157.70709228515625" layoutX="29.0" layoutY="234.0" startX="-19.70709228515625" startY="-0.5" />
-      <Line endX="-266.0" endY="390.79290771484375" layoutX="458.0" layoutY="14.0" startX="-5.0" startY="-6.0" />
+       <Button layoutX="29.0" layoutY="227.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="City">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+      <TextField fx:id="customerId" disable="true" editable="false" layoutX="151.0" layoutY="62.0" onAction="#randomId" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="customerName" layoutX="151.0" layoutY="95.0" />
+      <TextField fx:id="customerAddress" layoutX="151.0" layoutY="128.0" />
+      <TextField fx:id="customerPostalCode" layoutX="151.0" layoutY="160.0" />
+      <TextField fx:id="customerPhone" layoutX="151.0" layoutY="194.0" />
+       <TextField fx:id="customerCity" layoutX="151.0" layoutY="227.0" />
    </children>
 </AnchorPane>

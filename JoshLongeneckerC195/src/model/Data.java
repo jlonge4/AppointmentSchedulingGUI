@@ -18,6 +18,21 @@ public class Data {
         allAppointments.add(appointment);
     }
 
+    public static void addCustomer(Customer customer) throws SQLException {
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES ("
+                + customer.getId() + ", '"
+                + customer.getName() + "', '" + customer.getAddress() + "', '"
+                + customer.getPostalCode() + "', '" + customer.getPhone() + "',"
+                + customer.getCity() + ");";
+        stm.executeUpdate(query);
+    }
+    public static void removeCustomer(Customer customer)throws SQLException {
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "DELETE FROM customers WHERE Customer_ID=" + customer.getId() + ";";
+        stm.executeUpdate(query);
+    }
+
     public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -52,7 +67,8 @@ public class Data {
                     rs.getString("Customer_Name"),
                     rs.getString("Address"),
                     rs.getString("Postal_Code"),
-                    rs.getString("Phone"));
+                    rs.getString("Phone"),
+                    rs.getInt("Division_ID"));
             emptyList.add(customer);
         }
         stm.close();
