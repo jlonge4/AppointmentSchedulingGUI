@@ -18,6 +18,12 @@ public class Data {
         allAppointments.add(appointment);
     }
 
+    public static void removeAppointment(Appointment appointment)throws SQLException {
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "DELETE FROM appointments WHERE Appointment_ID=" + appointment.getId() + ";";
+        stm.executeUpdate(query);
+    }
+
     public static void addCustomer(Customer customer) throws SQLException {
         Statement stm = JDBC.getConnection().createStatement();
         String query = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES ("

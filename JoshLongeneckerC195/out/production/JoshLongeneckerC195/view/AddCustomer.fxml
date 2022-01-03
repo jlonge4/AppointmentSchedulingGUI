@@ -84,5 +84,6 @@
       <TextField fx:id="customerPostalCode" layoutX="151.0" layoutY="160.0" />
       <TextField fx:id="customerPhone" layoutX="151.0" layoutY="194.0" />
        <TextField fx:id="customerCity" layoutX="151.0" layoutY="227.0" />
+      <ComboBox layoutX="311.0" layoutY="227.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -94,6 +94,7 @@ public class MainMenu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
     public void removeCustomer() throws SQLException {
         Customer customer;
         customer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
@@ -118,6 +119,35 @@ public class MainMenu implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Selection Error");
             alert.setContentText("Please select a customer to delete");
+            alert.showAndWait();
+        }
+        CustomersTable.setItems(Data.getAllCustomers());
+    }
+
+    public void removeAppointment() throws SQLException {
+        Appointment appointment;
+        appointment = (Appointment) AppointmentTable.getSelectionModel().getSelectedItem();
+        if (appointment!=null) {
+            Alert alertA = new Alert(Alert.AlertType.ERROR);
+            alertA.setTitle("Selection Error");
+            alertA.setContentText("Are you sure you want to delete this appointment?");
+            alertA.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    try {
+                        Data.removeAppointment(appointment);
+                    } catch (Exception e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Selection Error");
+                        alert.setContentText("Please verify customer has no appointments or select a customer");
+                        alert.showAndWait();
+                    }
+                }
+            });
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Selection Error");
+            alert.setContentText("Please select an appointment to delete");
             alert.showAndWait();
         }
         CustomersTable.setItems(Data.getAllCustomers());

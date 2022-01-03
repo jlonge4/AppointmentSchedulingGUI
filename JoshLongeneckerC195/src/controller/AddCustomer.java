@@ -59,7 +59,6 @@ public class AddCustomer implements Initializable {
             if (item.getId() == randomId.get()) {
                 randomId.addAndGet(1);
             };
-
         });
         return randomId.get();
     }
