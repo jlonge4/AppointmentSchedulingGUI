@@ -103,7 +103,7 @@ public class Login implements Initializable {
         final String user = username.getText();
         final String pass = password.getText();
         try {
-            final FileWriter fw = new FileWriter("log.txt", true);
+            final FileWriter fw = new FileWriter("login_activity.txt", true);
             final BufferedWriter bw = new BufferedWriter(fw);
                 if (success) {
                     bw.write("Login Successful: " + "| UserName: " + user + "| PassWord: " + pass + "| time: " + time);

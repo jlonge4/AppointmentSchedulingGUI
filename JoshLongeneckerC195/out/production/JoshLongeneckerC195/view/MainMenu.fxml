@@ -64,7 +64,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button fx:id="deleteCustomer" layoutX="164.0" layoutY="452.0" mnemonicParsing="false" onAction="#removeCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Delete">
+      <Button fx:id="deleteCustomer" layoutX="164.0" layoutY="452.0" mnemonicParsing="false" onAction="#removeCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Delete Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -72,7 +72,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button fx:id="deleteAppointment" layoutX="164.0" layoutY="234.0" mnemonicParsing="false" onAction="#removeAppointment" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Delete">
+      <Button fx:id="deleteAppointment" layoutX="164.0" layoutY="234.0" mnemonicParsing="false" onAction="#removeAppointment" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Delete Appointment">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>

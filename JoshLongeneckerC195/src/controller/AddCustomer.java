@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -7,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
@@ -25,10 +28,18 @@ public class AddCustomer implements Initializable {
     public TextField customerPostalCode;
     public TextField customerPhone;
     public Customer customer;
+    public ComboBox customerState;
+    public ComboBox customerCountry;
+    public ObservableList<String> countries = FXCollections.observableArrayList("CA","US","UK");
+    public ObservableList<String> states = FXCollections.observableArrayList("WA","NY","SC");
+    public ObservableList<String> provincesCA = FXCollections.observableArrayList("ON","QB","BC");
+    public ObservableList<String> provincesUK = FXCollections.observableArrayList("Liverpool","Westminister","Scotland");
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add Customer");
+        customerCountry.setItems(countries);
         Customer customer = null;
         try {
             customer = new Customer(randomId(),"name","address","postalCode","phone", 1234);
@@ -36,6 +47,7 @@ public class AddCustomer implements Initializable {
             throwables.printStackTrace();
         }
         System.out.println(customer.getId());
+
 
     }
 
@@ -63,6 +75,16 @@ public class AddCustomer implements Initializable {
         return randomId.get();
     }
 
+    public void selectComboContent(ActionEvent event) {
+        if (customerCountry.getSelectionModel().getSelectedItem().equals("US")) {
+            customerState.setItems(states);
+        } else if (customerCountry.getSelectionModel().getSelectedItem().equals("UK")) {
+            customerState.setItems(provincesUK);
+        } else {
+            customerState.setItems(provincesCA);
+        }
+    }
+
     public void onCustomerSave(ActionEvent event) throws SQLException, IOException {
         System.out.println("Saved customer");
         int id = randomId();
@@ -81,7 +103,7 @@ public class AddCustomer implements Initializable {
             alert.showAndWait();
         }
         try {
-            address = customerAddress.getText();
+            address = customerAddress.getText() + ", " + customerState.getSelectionModel().getSelectedItem() + ", " + customerCountry.getSelectionModel().getSelectedItem();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
