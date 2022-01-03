@@ -99,11 +99,12 @@
       </TableView>
       <TableView fx:id="CustomersTable" layoutX="164.0" layoutY="273.0" prefHeight="157.0" prefWidth="840.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
          <columns>
-            <TableColumn fx:id="customerID" prefWidth="106.0" text="Customer_ID" />
-            <TableColumn fx:id="name" prefWidth="220.0" text="Customer_Name" />
-            <TableColumn fx:id="address" prefWidth="216.0" text="Address" />
-            <TableColumn fx:id="postalCode" minWidth="0.0" prefWidth="101.0" text="Postal Code" />
-            <TableColumn fx:id="phone" prefWidth="199.0" text="Phone" />
+            <TableColumn fx:id="customerID" prefWidth="82.0" text="Customer_ID" />
+            <TableColumn fx:id="name" prefWidth="207.0" text="Customer_Name" />
+            <TableColumn fx:id="address" prefWidth="226.0" text="Address" />
+            <TableColumn fx:id="postalCode" minWidth="0.0" prefWidth="107.0" text="Postal Code" />
+            <TableColumn fx:id="phone" prefWidth="149.0" text="Phone" />
+            <TableColumn fx:id="divId" text="Div_ID" />
          </columns>
          <effect>
             <DropShadow />

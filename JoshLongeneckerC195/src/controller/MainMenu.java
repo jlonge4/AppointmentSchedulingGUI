@@ -38,6 +38,7 @@ public class MainMenu implements Initializable {
     public TableColumn phone;
     public TableColumn customerID;
     private static Customer selectedCustomer = null;
+    public TableColumn divId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,6 +76,7 @@ public class MainMenu implements Initializable {
         address.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        divId.setCellValueFactory(new PropertyValueFactory<>("city"));
 
     }
 

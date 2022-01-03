@@ -92,4 +92,29 @@ public class Data {
         }
         return true;
     }
+
+    public static ObservableList<String> getList(int selection) throws SQLException {
+        ObservableList<String> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT * FROM first_level_divisions WHERE Country_ID=" + selection + ";";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            emptyList.add(rs.getString("Division"));
+        }
+        stm.close();
+        return emptyList;
+    }
+
+    public static int getDivId(Object selection) throws SQLException {
+        int divId = 0;
+        ObservableList<String> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT * FROM first_level_divisions WHERE Division='" + selection + "';";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            divId = rs.getInt("Division_ID");
+        }
+        stm.close();
+        return divId;
+    }
 }

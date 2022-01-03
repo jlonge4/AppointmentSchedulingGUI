@@ -30,10 +30,8 @@ public class AddCustomer implements Initializable {
     public Customer customer;
     public ComboBox customerState;
     public ComboBox customerCountry;
-    public ObservableList<String> countries = FXCollections.observableArrayList("CA","US","UK");
-    public ObservableList<String> states = FXCollections.observableArrayList("WA","NY","SC");
-    public ObservableList<String> provincesCA = FXCollections.observableArrayList("ON","QB","BC");
-    public ObservableList<String> provincesUK = FXCollections.observableArrayList("Liverpool","Westminister","Scotland");
+    public ObservableList<String> countries = FXCollections.observableArrayList("US" , "UK" , "CA");
+
 
 
     @Override
@@ -75,13 +73,13 @@ public class AddCustomer implements Initializable {
         return randomId.get();
     }
 
-    public void selectComboContent(ActionEvent event) {
+    public void selectComboContent(ActionEvent event) throws SQLException {
         if (customerCountry.getSelectionModel().getSelectedItem().equals("US")) {
-            customerState.setItems(states);
+            customerState.setItems(Data.getList(1));
         } else if (customerCountry.getSelectionModel().getSelectedItem().equals("UK")) {
-            customerState.setItems(provincesUK);
+            customerState.setItems(Data.getList(2));
         } else {
-            customerState.setItems(provincesCA);
+            customerState.setItems(Data.getList(3));
         }
     }
 
@@ -92,7 +90,7 @@ public class AddCustomer implements Initializable {
         String address = "";
         String postalCode = "";
         String phone = "";
-        int city = 22;
+        int city = 0;
 
         try {
             name = customerName.getText();
@@ -107,7 +105,7 @@ public class AddCustomer implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer address text field");
+            alert.setContentText("please fill in or correct the customer address, state/province, and country fields");
             alert.showAndWait();
         }
         try {
@@ -126,20 +124,19 @@ public class AddCustomer implements Initializable {
             alert.setContentText("please fill in or correct the customer name text field");
             alert.showAndWait();
         }
+        try {
+            city = Data.getDivId(customerState.getSelectionModel().getSelectedItem());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("please fill in or correct the customer name text field");
+            alert.showAndWait();
+        }
 
         Customer customer = new Customer(id,name,address,postalCode,phone,city);
-//        try {
             Data.addCustomer(customer);
-
             MainMenu(event);
-//        } catch (Exception e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Add Failed");
-//            alert.setContentText("Invalid Customer");
-//            alert.showAndWait();
-//        }
-
-
     }
+
 
 }
