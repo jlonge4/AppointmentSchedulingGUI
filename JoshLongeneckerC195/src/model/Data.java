@@ -80,4 +80,16 @@ public class Data {
         stm.close();
         return emptyList;
     }
+
+    public static boolean validateCustomerDelete(Customer customer) throws SQLException {
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT * \n" +
+                "FROM appointments\n" +
+                "WHERE Customer_ID=" + customer.getId() + ";";
+        ResultSet rs = stm.executeQuery(query);
+        if (rs.next()) {
+            return false;
+        }
+        return true;
+    }
 }

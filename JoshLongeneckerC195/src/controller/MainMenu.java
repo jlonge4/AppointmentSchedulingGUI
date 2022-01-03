@@ -105,7 +105,14 @@ public class MainMenu implements Initializable {
             alertA.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     try {
-                        Data.removeCustomer(customer);
+                        if (Data.validateCustomerDelete(customer)) {
+                            Data.removeCustomer(customer);
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Selection Error");
+                            alert.setContentText("Please verify customer has no appointments or select a customer");
+                            alert.showAndWait();
+                        }
                     } catch (Exception e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Selection Error");
