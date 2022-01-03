@@ -70,7 +70,15 @@
                <DropShadow />
            </effect>
        </Button>
-       <Button layoutX="29.0" layoutY="227.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="City">
+       <Button layoutX="29.0" layoutY="258.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="State/Province">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="227.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Country">
            <font>
                <Font name="Microsoft Sans Serif" size="12.0" />
            </font>
@@ -83,7 +91,8 @@
       <TextField fx:id="customerAddress" layoutX="151.0" layoutY="128.0" />
       <TextField fx:id="customerPostalCode" layoutX="151.0" layoutY="160.0" />
       <TextField fx:id="customerPhone" layoutX="151.0" layoutY="194.0" />
-       <TextField fx:id="customerCity" layoutX="151.0" layoutY="227.0" />
-      <ComboBox layoutX="311.0" layoutY="227.0" prefWidth="150.0" />
+       <TextField fx:id="customerCity" layoutX="151.0" layoutY="291.0" text="enter a number " />
+      <ComboBox fx:id="customerState" layoutX="151.0" layoutY="258.0" prefWidth="150.0" />
+       <ComboBox fx:id="customerCountry" layoutX="151.0" layoutY="227.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

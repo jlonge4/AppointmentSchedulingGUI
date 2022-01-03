@@ -1,5 +1,6 @@
 package controller;
 
+import com.mysql.cj.log.Log;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +14,20 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import utilities.JDBC;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Login implements Initializable {
 
@@ -60,6 +68,7 @@ public class Login implements Initializable {
         String pass = password.getText();
         boolean userExists = loginVerification(user, pass);
         if (userExists) {
+                logLoginAttempt(true);
                 Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();
@@ -68,6 +77,7 @@ public class Login implements Initializable {
                 stage.show();
                 ((Button)(event.getSource())).getScene().getWindow().hide();
         } else {
+            logLoginAttempt(false);
             System.out.println("Login Failed");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(loginFailed);
@@ -86,6 +96,28 @@ public class Login implements Initializable {
             return true;
         }
         return false;
+    }
+    private void logLoginAttempt(boolean success) {
+        final DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
+        final String time = dtf.format(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
+        final String user = username.getText();
+        final String pass = password.getText();
+        try {
+            final FileWriter fw = new FileWriter("log.txt", true);
+            final BufferedWriter bw = new BufferedWriter(fw);
+                if (success) {
+                    bw.write("Login Successful: " + "| UserName: " + user + "| PassWord: " + pass + "| time: " + time);
+                    bw.newLine();
+                    bw.close();
+                } else {
+                    bw.write("Login Failed: " + "| UserName: " + user + "| PassWord: " + pass + "| time: " + time);
+                    bw.newLine();
+                    bw.close();
+                }
+        } catch (IOException ex) {
+            System.out.println("Failed to write login attempt");
+            System.out.println(ex.getMessage());
+        }
     }
 }
 
