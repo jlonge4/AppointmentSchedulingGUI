@@ -117,4 +117,53 @@ public class Data {
         stm.close();
         return divId;
     }
+
+//    public static ObservableList<String> getDiv(int selection) throws SQLException {
+//        String div = "";
+//        ObservableList<String> emptyList = FXCollections.observableArrayList();
+//        Statement stm = JDBC.getConnection().createStatement();
+//        String query = "SELECT * FROM first_level_divisions WHERE Division_ID=" + selection + ";";
+//        ResultSet rs = stm.executeQuery(query);
+//        while(rs.next()) {
+//            div = rs.getString("Division");
+//        }
+//        emptyList.add(div);
+//        stm.close();
+//        return emptyList;
+//    }
+
+    public static String getCountry(int selection) throws SQLException {
+        String div = "";
+        int number = 0;
+        ObservableList<String> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID=" + selection +";";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            number = rs.getInt("Country_ID");
+        }
+        if (number == 1) {
+            div = "US";
+        } else if (number == 2) {
+            div = "UK";
+        } else {
+            div = "CA";;
+        }
+        emptyList.add(div);
+        stm.close();
+        return div;
+    }
+
+    public static String getState(int selection) throws SQLException {
+        String div = "";
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT Division FROM first_level_divisions WHERE Division_ID=" + selection +";";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            div = rs.getString("Division");
+        }
+        stm.close();
+        return div;
+    }
+
 }

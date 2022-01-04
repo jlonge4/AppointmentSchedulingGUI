@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
@@ -26,26 +27,58 @@ public class UpdateCustomer implements Initializable {
     public TextField customerAddress;
     public TextField customerPostalCode;
     public TextField customerPhone;
-    public TextField customerCity;
     private static Customer customerOld;
+    public ComboBox customerState;
+    public ComboBox customerCountry;
     private Customer customerNew;
+    public ObservableList<String> countries = FXCollections.observableArrayList("US" , "UK" , "CA");
+
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         System.out.println("Update Customer");
 
         customerOld = MainMenu.getSelectedCustomer();
+        customerCountry.setItems(countries);
+        try {
+            customerCountry.getSelectionModel().select(Data.getCountry(customerOld.getCity()));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
 
         customerId.setText(Integer.toString(customerOld.getId()));
         customerName.setText(customerOld.getName());
         customerAddress.setText(customerOld.getAddress());
         customerPostalCode.setText(customerOld.getPostalCode());
         customerPhone.setText(customerOld.getPhone());
-        customerCity.setText(Integer.toString(customerOld.getCity()));
+        try {
+            if (customerCountry.getSelectionModel().getSelectedItem().equals("US")) {
+                customerState.setItems(Data.getList(1));
+            } else if (customerCountry.getSelectionModel().getSelectedItem().equals("UK")) {
+                customerState.setItems(Data.getList(2));
+            } else {
+                customerState.setItems(Data.getList(3));
+            }
+            customerState.getSelectionModel().select(Data.getState(customerOld.getCity()));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
 
+    }
 
+    public void selectComboContent(ActionEvent event) throws SQLException {
+        if (customerCountry.getSelectionModel().getSelectedItem().equals("US")) {
+            customerState.setItems(Data.getList(1));
+        } else if (customerCountry.getSelectionModel().getSelectedItem().equals("UK")) {
+            customerState.setItems(Data.getList(2));
+        } else {
+            customerState.setItems(Data.getList(3));
+        }
     }
 
     public void onSave (ActionEvent actionEvent) throws IOException, SQLException {
@@ -89,7 +122,7 @@ public class UpdateCustomer implements Initializable {
             alert.showAndWait();
         }
         try {
-            city = Integer.parseInt(customerCity.getText());
+            city = Data.getDivId(customerState.getSelectionModel().getSelectedItem());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");

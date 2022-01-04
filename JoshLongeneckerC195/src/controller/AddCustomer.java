@@ -101,7 +101,10 @@ public class AddCustomer implements Initializable {
             alert.showAndWait();
         }
         try {
-            address = customerAddress.getText() + ", " + customerState.getSelectionModel().getSelectedItem() + ", " + customerCountry.getSelectionModel().getSelectedItem();
+            address = customerAddress.getText() ;
+//                    + ", " +
+//                    customerState.getSelectionModel().getSelectedItem() + ", " +
+//                    customerCountry.getSelectionModel().getSelectedItem();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");

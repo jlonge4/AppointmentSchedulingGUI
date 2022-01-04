@@ -39,6 +39,9 @@ public class MainMenu implements Initializable {
     public TableColumn customerID;
     private static Customer selectedCustomer = null;
     public TableColumn divId;
+    public RadioButton month;
+    public RadioButton all;
+    public RadioButton week;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,7 +49,9 @@ public class MainMenu implements Initializable {
 
         AppointmentTable.getItems().clear();
         try {
-            AppointmentTable.setItems(Data.getAllAppointments());
+            if(all.isSelected()) {
+                AppointmentTable.setItems(Data.getAllAppointments());
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
