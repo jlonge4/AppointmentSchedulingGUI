@@ -38,6 +38,8 @@ public class MainMenu implements Initializable {
     public TableColumn phone;
     public TableColumn customerID;
     private static Customer selectedCustomer = null;
+    private static Customer selectedAptCustomer = null;
+    public static int selectedAptCustomerId;
     public TableColumn divId;
     public RadioButton month;
     public RadioButton all;
@@ -103,13 +105,22 @@ public class MainMenu implements Initializable {
         stage.show();
     }
 
-    public void addAppointment (ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 500);
-        stage.setTitle("addAppointment");
-        stage.setScene(scene);
-        stage.show();
+    public void addAppointment (ActionEvent actionEvent) throws IOException, NullPointerException {
+        selectedAptCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+        if (selectedAptCustomer!=null) {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 700, 500);
+            stage.setTitle("addAppointment");
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Selection Error");
+            alert.setContentText("Please select a customer");
+            alert.showAndWait();
+        }
+
     }
 
     public void removeCustomer() throws SQLException {
@@ -179,6 +190,10 @@ public class MainMenu implements Initializable {
 
     public static Customer getSelectedCustomer() {
         return selectedCustomer;
+    }
+
+    public static Customer getSelectedAptCustomer() {
+        return selectedAptCustomer;
     }
 
     public void updateCustomer (ActionEvent actionEvent) throws IOException {

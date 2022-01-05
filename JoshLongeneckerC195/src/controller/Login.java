@@ -39,7 +39,7 @@ public class Login implements Initializable {
     public Button pass;
     public Label signIn;
     private String loginFailed;
-    public static int userInt = 0;
+    public static int userInt;
 
 
     @Override
@@ -120,8 +120,6 @@ public class Login implements Initializable {
             System.out.println("Failed to write login attempt");
             System.out.println(ex.getMessage());
         }
-    }
-    public void getUser(){
         if (username.getText().equals("test")) {
             userInt = 1;
         }

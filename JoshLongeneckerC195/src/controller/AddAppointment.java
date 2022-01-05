@@ -32,6 +32,11 @@ public class AddAppointment implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Add Customer");
+        userId.setText(String.valueOf(Login.returnUser()));
+        int id;
+        Customer customer;
+        customer = MainMenu.getSelectedAptCustomer();
+        customerId.setText(String.valueOf(customer.getId()));
 
 
 
