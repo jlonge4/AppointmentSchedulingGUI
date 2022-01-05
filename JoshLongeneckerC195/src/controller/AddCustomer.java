@@ -45,8 +45,7 @@ public class AddCustomer implements Initializable {
             throwables.printStackTrace();
         }
         System.out.println(customer.getId());
-
-
+        
     }
 
     public void MainMenu (ActionEvent actionEvent) throws IOException {

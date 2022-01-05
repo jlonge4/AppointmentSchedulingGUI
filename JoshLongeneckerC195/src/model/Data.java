@@ -14,8 +14,13 @@ public class Data {
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
 
-    public static void addAppointment(Appointment appointment) {
-        allAppointments.add(appointment);
+    public static void addAppointment(Appointment appointment) throws SQLException {
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES ("
+                + appointment.getId() + ", '"
+                + appointment.getTitle() + "', '" + appointment.getDescription() + "', '"
+                + appointment.getLocation() + "', '" + appointment.getType() + "', '" + appointment.getStart() + "', '" + appointment.getEnd() + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + 3 + ");";
+        stm.executeUpdate(query);
     }
 
     public static void removeAppointment(Appointment appointment)throws SQLException {

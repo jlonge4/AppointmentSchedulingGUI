@@ -52,6 +52,7 @@ public class MainMenu implements Initializable {
             if(all.isSelected()) {
                 AppointmentTable.setItems(Data.getAllAppointments());
             }
+//            SELECT * FROM table WHERE date_column >= '2014-01-01' AND date_column <= '2015-01-01';
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -98,6 +99,15 @@ public class MainMenu implements Initializable {
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 500);
         stage.setTitle("addCustomer");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void addAppointment (ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 700, 500);
+        stage.setTitle("addAppointment");
         stage.setScene(scene);
         stage.show();
     }

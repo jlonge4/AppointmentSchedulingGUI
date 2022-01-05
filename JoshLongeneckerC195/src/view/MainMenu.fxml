@@ -16,7 +16,7 @@
             <DropShadow />
          </effect>
       </Label>
-      <Button layoutX="14.0" layoutY="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Appointment">
+      <Button layoutX="14.0" layoutY="64.0" mnemonicParsing="false" onAction="#addAppointment" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Appointment">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>

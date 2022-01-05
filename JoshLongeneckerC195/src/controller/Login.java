@@ -39,6 +39,8 @@ public class Login implements Initializable {
     public Button pass;
     public Label signIn;
     private String loginFailed;
+    public static int userInt = 0;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -118,6 +120,16 @@ public class Login implements Initializable {
             System.out.println("Failed to write login attempt");
             System.out.println(ex.getMessage());
         }
+    }
+    public void getUser(){
+        if (username.getText().equals("test")) {
+            userInt = 1;
+        }
+        userInt = 2;
+    }
+
+    public static int returnUser(){
+        return userInt;
     }
 }
 
