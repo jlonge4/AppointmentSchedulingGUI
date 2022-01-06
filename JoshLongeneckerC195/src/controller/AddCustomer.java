@@ -100,10 +100,7 @@ public class AddCustomer implements Initializable {
             alert.showAndWait();
         }
         try {
-            address = customerAddress.getText() ;
-//                    + ", " +
-//                    customerState.getSelectionModel().getSelectedItem() + ", " +
-//                    customerCountry.getSelectionModel().getSelectedItem();
+            address = customerAddress.getText();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -134,10 +131,17 @@ public class AddCustomer implements Initializable {
             alert.setContentText("please fill in or correct the customer name text field");
             alert.showAndWait();
         }
-
-        Customer customer = new Customer(id,name,address,postalCode,phone,city);
+        try {
+            Customer customer = new Customer(id, name, address, postalCode, phone, city);
             Data.addCustomer(customer);
             MainMenu(event);
+        } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Add Failed");
+        alert.setContentText("please fill in or correct the customer name text field");
+        alert.showAndWait();
+        }
+
     }
 
 

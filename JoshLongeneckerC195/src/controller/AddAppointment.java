@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -62,10 +64,10 @@ public class AddAppointment implements Initializable {
         });
 
         Date date=java.util.Calendar.getInstance().getTime();
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
         String date1 = format1.format(date);
 
-        Date inActiveDate = null;
+
         System.out.println("Add Customer" + date1);
         userId.setText(String.valueOf(Login.returnUser()));
         int id;
@@ -105,9 +107,8 @@ public class AddAppointment implements Initializable {
         stage.show();
     }
 
-    public void onAppointmentSave(ActionEvent event) throws SQLException, IOException {
-        System.out.println("Saved Appointment");
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+    public void onAppointmentSave(ActionEvent event) throws SQLException, IOException, NullPointerException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
         int appointmentId = randomId();
         String titleApt = "";
         String descriptionApt = "";
@@ -167,15 +168,15 @@ public class AddAppointment implements Initializable {
             alert.setContentText("please fill in or correct the customer name text field");
             alert.showAndWait();
         }
-        try {
-            LocalDate date = start.getValue();
-            startApt = format1.format(date);
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
-            alert.showAndWait();
-        }
+//        try {
+            LocalDateTime date = start.getValue().atTime(hoursOne.getSelectionModel().getSelectedIndex(),minutesOne.getSelectionModel().getSelectedIndex());
+            startApt = date.format(formatter);
+//        } catch (Exception e) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Add Failed");
+//            alert.setContentText("please fill in or correct the customer name text field");
+//            alert.showAndWait();
+//        }
         try {
 //            endApt = end.();
         } catch (Exception e) {
@@ -200,10 +201,17 @@ public class AddAppointment implements Initializable {
             alert.setContentText("please fill in or correct the customer name text field");
             alert.showAndWait();
         }
-
+        try {
+            System.out.println(startApt);
         Appointment appointment = new Appointment(appointmentId, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
         Data.addAppointment(appointment);
         MainMenu(event);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("please fill in or correct the appointment text fields");
+            alert.showAndWait();
+        }
 
     }
 
