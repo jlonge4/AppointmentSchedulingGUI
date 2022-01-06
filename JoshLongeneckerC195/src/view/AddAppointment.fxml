@@ -116,9 +116,17 @@
       <TextField fx:id="description" layoutX="151.0" layoutY="198.0" />
       <TextField fx:id="location" layoutX="151.0" layoutY="231.0" />
        <ComboBox fx:id="contact" layoutX="151.0" layoutY="262.0" prefWidth="150.0" />
+       <ComboBox fx:id="hoursOne" layoutX="347.0" layoutY="324.0" prefHeight="25.0" prefWidth="62.0" />
+       <ComboBox fx:id="minutesTwo" layoutX="429.0" layoutY="356.0" prefHeight="25.0" prefWidth="62.0" />
+       <ComboBox fx:id="hoursTwo" layoutX="347.0" layoutY="356.0" prefHeight="25.0" prefWidth="62.0" />
+       <ComboBox fx:id="minutesOne" layoutX="429.0" layoutY="323.0" prefHeight="25.0" prefWidth="62.0" />
       <DatePicker fx:id="start" layoutX="151.0" layoutY="324.0" />
       <DatePicker fx:id="end" layoutX="151.0" layoutY="356.0" />
       <TextField fx:id="customerId" disable="true" editable="false" layoutX="152.0" layoutY="127.0" />
       <TextField fx:id="type" layoutX="152.0" layoutY="293.0" />
+      <Label layoutX="332.0" layoutY="327.0" text="H" />
+      <Label layoutX="332.0" layoutY="360.0" text="H" />
+      <Label layoutX="413.0" layoutY="360.0" text="M" />
+      <Label layoutX="413.0" layoutY="327.0" text="M" />
    </children>
 </AnchorPane>

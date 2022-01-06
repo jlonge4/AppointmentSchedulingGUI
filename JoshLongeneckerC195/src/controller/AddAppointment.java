@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -34,16 +35,34 @@ public class AddAppointment implements Initializable {
     public TextField customerId;
     public DatePicker start;
     public DatePicker end;
+    public ComboBox hoursOne;
+    public ComboBox minutesTwo;
+    public ComboBox hoursTwo;
+    public ComboBox minutesOne;
     private ObservableList<String> contacts = FXCollections.observableArrayList();
     ObservableList<String> hours = FXCollections.observableArrayList();
     ObservableList<String> minutes = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+        minutes.addAll("00", "15", "30", "45");
+        hoursOne.setItems(hours);
+        hoursTwo.setItems(hours);
+        minutesOne.setItems(minutes);
+        minutesTwo.setItems(minutes);
+        start.setOnAction(event -> {
+            LocalDate date = start.getValue();
+            System.out.println("Selected date: " + date);
+        });
+        end.setOnAction(event -> {
+            LocalDate date = end.getValue();
+            System.out.println("Selected date: " + date);
+        });
+
         Date date=java.util.Calendar.getInstance().getTime();
-
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-
         String date1 = format1.format(date);
 
         Date inActiveDate = null;
@@ -88,6 +107,7 @@ public class AddAppointment implements Initializable {
 
     public void onAppointmentSave(ActionEvent event) throws SQLException, IOException {
         System.out.println("Saved Appointment");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         int appointmentId = randomId();
         String titleApt = "";
         String descriptionApt = "";
@@ -148,7 +168,8 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-//            startApt = start.();
+            LocalDate date = start.getValue();
+            startApt = format1.format(date);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
