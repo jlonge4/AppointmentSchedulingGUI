@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +16,10 @@ import model.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,17 +34,31 @@ public class AddAppointment implements Initializable {
     public TextField customerId;
     public DatePicker start;
     public DatePicker end;
+    private ObservableList<String> contacts = FXCollections.observableArrayList();
+    ObservableList<String> hours = FXCollections.observableArrayList();
+    ObservableList<String> minutes = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Add Customer");
+        Date date=java.util.Calendar.getInstance().getTime();
+
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+        String date1 = format1.format(date);
+
+        Date inActiveDate = null;
+        System.out.println("Add Customer" + date1);
         userId.setText(String.valueOf(Login.returnUser()));
         int id;
         Customer customer;
         customer = MainMenu.getSelectedAptCustomer();
         customerId.setText(String.valueOf(customer.getId()));
-
-
+        try {
+            contacts = (Data.getContacts());
+            contact.setItems(contacts);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 

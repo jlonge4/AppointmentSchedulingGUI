@@ -185,7 +185,7 @@ public class MainMenu implements Initializable {
             alert.setContentText("Please select an appointment to delete");
             alert.showAndWait();
         }
-        CustomersTable.setItems(Data.getAllCustomers());
+        AppointmentTable.setItems(Data.getAllAppointments());
     }
 
     public static Customer getSelectedCustomer() {

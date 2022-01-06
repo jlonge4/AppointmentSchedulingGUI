@@ -123,19 +123,31 @@ public class Data {
         return divId;
     }
 
-//    public static ObservableList<String> getDiv(int selection) throws SQLException {
-//        String div = "";
-//        ObservableList<String> emptyList = FXCollections.observableArrayList();
-//        Statement stm = JDBC.getConnection().createStatement();
-//        String query = "SELECT * FROM first_level_divisions WHERE Division_ID=" + selection + ";";
-//        ResultSet rs = stm.executeQuery(query);
-//        while(rs.next()) {
-//            div = rs.getString("Division");
-//        }
-//        emptyList.add(div);
-//        stm.close();
-//        return emptyList;
-//    }
+    public static ObservableList<String> getContacts() throws SQLException {
+        ObservableList<String> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT * FROM contacts;";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            emptyList.add(rs.getString("Contact_Name"));
+        }
+        stm.close();
+        return emptyList;
+    }
+
+    public static ObservableList<String> getDiv(int selection) throws SQLException {
+        String div = "";
+        ObservableList<String> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT * FROM first_level_divisions WHERE Division_ID=" + selection + ";";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            div = rs.getString("Division");
+        }
+        emptyList.add(div);
+        stm.close();
+        return emptyList;
+    }
 
     public static String getCountry(int selection) throws SQLException {
         String div = "";
