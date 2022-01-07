@@ -119,13 +119,13 @@ public class ModifyAppointment implements Initializable {
     public void onAppointmentSave(ActionEvent event) throws SQLException, IOException, NullPointerException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
         int appointmentIdNew = Integer.parseInt(appointmentId.getText());
-        String titleApt = "";
-        String descriptionApt = "";
-        String locationApt = "";
-        String contactApt = "";
-        String typeApt = "";
-        String startApt = "2020-05-29 12:00:00";
-        String endApt = "2020-05-29 13:00:00";
+        String titleApt = null;
+        String descriptionApt = null;
+        String locationApt = null;
+        String contactApt = null;
+        String typeApt = null;
+        String startApt = null;
+        String endApt = null;
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
 

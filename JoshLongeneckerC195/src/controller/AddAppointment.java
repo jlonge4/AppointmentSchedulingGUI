@@ -107,12 +107,12 @@ public class AddAppointment implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
         int appointmentId = randomId();
         String titleApt = "";
-        String descriptionApt = "";
-        String locationApt = "";
-        String contactApt = "";
-        String typeApt = "";
-        String startApt = "2020-05-29 12:00:00";
-        String endApt = "2020-05-29 13:00:00";
+        String descriptionApt = null;
+        String locationApt = null;
+        String contactApt = null;
+        String typeApt = null;
+        String startApt = null;
+        String endApt = null;
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
         try {
@@ -120,7 +120,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the appointment title text field");
             alert.showAndWait();
         }
         try {
@@ -128,7 +128,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the appointment description text field");
             alert.showAndWait();
         }
         try {
@@ -136,7 +136,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the appointment location text field");
             alert.showAndWait();
         }
         try {
@@ -144,7 +144,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the appointment contact field");
             alert.showAndWait();
         }
         try {
@@ -152,7 +152,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the appointment type text field");
             alert.showAndWait();
         }
         try {
@@ -160,7 +160,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the appointment description text field");
             alert.showAndWait();
         }
         try {
@@ -180,7 +180,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the end date and time fields");
             alert.showAndWait();
         }
         try {
@@ -188,7 +188,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the appointment customer ID text field");
             alert.showAndWait();
         }
         try {
@@ -196,7 +196,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the apointment user ID text field");
             alert.showAndWait();
         }
         try {
@@ -207,7 +207,7 @@ public class AddAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the appointment text fields");
+            alert.setContentText("Invalid Appointment");
             alert.showAndWait();
         }
 

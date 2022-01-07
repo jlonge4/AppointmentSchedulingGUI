@@ -79,10 +79,10 @@ public class AddCustomer implements Initializable {
     public void onCustomerSave(ActionEvent event) throws SQLException, IOException {
         System.out.println("Saved customer");
         int id = randomId();
-        String name = "";
-        String address = "";
-        String postalCode = "";
-        String phone = "";
+        String name = null;
+        String address = null;
+        String postalCode = null;
+        String phone = null;
         int city = 0;
 
         try {
@@ -114,7 +114,7 @@ public class AddCustomer implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the customer phone text field");
             alert.showAndWait();
         }
         try {
@@ -122,7 +122,7 @@ public class AddCustomer implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the customer city field");
             alert.showAndWait();
         }
         try {
@@ -132,7 +132,7 @@ public class AddCustomer implements Initializable {
         } catch (Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Add Failed");
-        alert.setContentText("please fill in or correct the customer name text field");
+        alert.setContentText("Invalid Customer");
         alert.showAndWait();
         }
 

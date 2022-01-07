@@ -91,6 +91,8 @@ public class MainMenu implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divId.setCellValueFactory(new PropertyValueFactory<>("city"));
 
+
+
     }
     /**Appointment Table Filter handler*/
     public void handleAptFilter () throws SQLException {
@@ -207,6 +209,10 @@ public class MainMenu implements Initializable {
             alertA.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
                     try {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Appointment Cancelled");
+                        alert.setContentText("You have cancelled appointment ID #" + appointment.getId() + " of type " + appointment.getType());
+                        alert.showAndWait();
                         Data.removeAppointment(appointment);
                     } catch (Exception e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);

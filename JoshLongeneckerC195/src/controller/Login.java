@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Appointment;
+import model.Data;
 import utilities.JDBC;
 
 import java.io.BufferedWriter;
@@ -63,6 +65,20 @@ public class Login implements Initializable {
         boolean userExists = loginVerification(user, pass);
         if (userExists) {
                 logLoginAttempt(true);
+                if (Data.appointment15MinAlert()!= null) {
+                    Appointment appointment;
+                    appointment = Data.appointment15MinAlert();
+                    int Id = Login.returnUser();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Upcoming Appointments");
+                    alert.setContentText("You (USER#" + Id + ") have an appointment(ID#" + appointment.getId() + ") scheduled to start at" + appointment.getStart() + " !");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("No Appointments");
+                    alert.setContentText("You have no upcoming appointments");
+                    alert.showAndWait();
+                }
                 Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
                 Scene scene = new Scene(root);
                 Stage stage = new Stage();

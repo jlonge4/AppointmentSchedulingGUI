@@ -1,11 +1,15 @@
 package model;
 
+import controller.Login;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import utilities.JDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class Data {
 
@@ -232,6 +236,38 @@ public class Data {
         }
         stm.close();
         return div;
+    }
+
+    public static Appointment appointment15MinAlert() {
+        Appointment appointment;
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zid = ZoneId.systemDefault();
+        ZonedDateTime zdt = now.atZone(zid);
+        LocalDateTime ldt = zdt.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+        LocalDateTime ldt2 = ldt.plusMinutes(15);
+        int user = Login.returnUser();
+        try {
+            Statement statement = JDBC.getConnection().createStatement();
+            String query = "SELECT * FROM appointment WHERE start BETWEEN '" + ldt + "' AND '" + ldt2 + "' AND " +
+                    "contact=" + user + ";";
+            ResultSet rs = statement.executeQuery(query);
+            if(rs.next()) {
+                appointment = new Appointment(rs.getInt("Appointment_ID"),
+                        rs.getString("Title"),
+                        rs.getString("Description"),
+                        rs.getString("Location"),
+                        rs.getString("Contact_ID"),
+                        rs.getString("Type"),
+                        rs.getString("Start"),
+                        rs.getString("End"),
+                        rs.getInt("Customer_ID"),
+                        rs.getInt("User_ID"));
+                return appointment;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQLException: " + e.getMessage());
+        }
+        return null;
     }
 
 }
