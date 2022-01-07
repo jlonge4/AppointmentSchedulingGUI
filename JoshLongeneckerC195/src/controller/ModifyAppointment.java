@@ -213,18 +213,17 @@ public class ModifyAppointment implements Initializable {
             alert.setContentText("please fill in or correct the customer name text field");
             alert.showAndWait();
         }
-//        try {
+        try {
             System.out.println(startApt);
             appointmentNew = new Appointment(appointmentIdNew, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
             Data.removeAppointment(appointmentOld);
             Data.addAppointment(appointmentNew);
             MainMenu(event);
-//        } catch (Exception e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Add Failed");
-//            alert.setContentText("please fill in or correct the appointment text fields");
-//            alert.showAndWait();
-//        }
-
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("please fill in or correct the appointment text fields");
+            alert.showAndWait();
+        }
     }
 }

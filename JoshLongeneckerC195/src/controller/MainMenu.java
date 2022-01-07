@@ -92,7 +92,7 @@ public class MainMenu implements Initializable {
         divId.setCellValueFactory(new PropertyValueFactory<>("city"));
 
     }
-
+    /**Appointment Table Filter handler*/
     public void handleAptFilter () throws SQLException {
         AppointmentTable.getItems().clear();
         if(month.isSelected()) {
@@ -104,7 +104,7 @@ public class MainMenu implements Initializable {
             AppointmentTable.setItems(Data.getAllAppointments());
         }
     }
-
+    /**navigates back to login screen*/
     public void toLogin (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -113,6 +113,7 @@ public class MainMenu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**navigates to add customer screen*/
     public void addCustomer (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -121,7 +122,7 @@ public class MainMenu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**navigates to modify appointment screen*/
     public void modifyAppointment (ActionEvent actionEvent) throws IOException {
         selectedAppointment= (Appointment) AppointmentTable.getSelectionModel().getSelectedItem();
         if (selectedAppointment!= null) {
@@ -138,9 +139,10 @@ public class MainMenu implements Initializable {
             alert.showAndWait();
         }
     }
-
+    /**passes selected apt data to next screen*/
     public static Appointment getselectedAppointment() { return selectedAppointment; }
 
+    /**navigates to add apt screen*/
     public void addAppointment (ActionEvent actionEvent) throws IOException, NullPointerException {
         selectedAptCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
         if (selectedAptCustomer!=null) {
@@ -158,7 +160,7 @@ public class MainMenu implements Initializable {
         }
 
     }
-
+    /**allows removal of selected customer*/
     public void removeCustomer() throws SQLException {
         Customer customer;
         customer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
@@ -194,7 +196,7 @@ public class MainMenu implements Initializable {
         }
         CustomersTable.setItems(Data.getAllCustomers());
     }
-
+    /**allows removal of selected appointment*/
     public void removeAppointment() throws SQLException {
         Appointment appointment;
         appointment = (Appointment) AppointmentTable.getSelectionModel().getSelectedItem();
@@ -223,15 +225,15 @@ public class MainMenu implements Initializable {
         }
         AppointmentTable.setItems(Data.getAllAppointments());
     }
-
+    /**passes selected customer data to next screen*/
     public static Customer getSelectedCustomer() {
         return selectedCustomer;
     }
-
+    /**passes selected customer data to create apt screen*/
     public static Customer getSelectedAptCustomer() {
         return selectedAptCustomer;
     }
-
+    /**navigates to update customer screen*/
     public void updateCustomer (ActionEvent actionEvent) throws IOException {
         selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
         if (selectedCustomer!= null) {
@@ -247,6 +249,14 @@ public class MainMenu implements Initializable {
             alert.setContentText("Please select a customer");
             alert.showAndWait();
         }
+    }
+    public void toGenerateReports (ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/GenerateReports.fxml"));
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1100, 500);
+        stage.setTitle("Generate Reports");
+        stage.setScene(scene);
+        stage.show();
     }
 
 

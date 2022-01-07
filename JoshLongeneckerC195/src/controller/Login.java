@@ -55,7 +55,7 @@ public class Login implements Initializable {
         loginFailed=(rb.getString("loginFailed"));
 
     }
-
+    /**upon successful login, takes user to main menu*/
     @FXML
     private void onLogin(ActionEvent event) throws IOException, SQLException {
         String user = username.getText();
@@ -91,6 +91,7 @@ public class Login implements Initializable {
         }
         return false;
     }
+    /**logs each login attempt*/
     private void logLoginAttempt(boolean success) {
         final DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
         final String time = dtf.format(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
@@ -117,7 +118,7 @@ public class Login implements Initializable {
         }
         userInt = 2;
     }
-
+    /**returns user ID for apt creation*/
     public static int returnUser(){
         return userInt;
     }

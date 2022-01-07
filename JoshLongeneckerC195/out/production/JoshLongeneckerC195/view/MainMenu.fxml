@@ -40,7 +40,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button layoutX="14.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Generate Reports">
+      <Button layoutX="14.0" layoutY="190.0" mnemonicParsing="false" onAction="#toGenerateReports" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Generate Reports">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>

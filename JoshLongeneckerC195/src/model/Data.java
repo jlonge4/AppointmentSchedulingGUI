@@ -3,7 +3,6 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import utilities.JDBC;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,7 +12,7 @@ public class Data {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
-
+    /**SQL query to add apt from add apt screen*/
     public static void addAppointment(Appointment appointment) throws SQLException {
         Statement stm = JDBC.getConnection().createStatement();
         String query = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES ("
@@ -22,13 +21,13 @@ public class Data {
                 + appointment.getLocation() + "', '" + appointment.getType() + "', '" + appointment.getStart() + "', '" + appointment.getEnd() + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + 3 + ");";
         stm.executeUpdate(query);
     }
-
+    /**SQL query to remove apt from main menu screen*/
     public static void removeAppointment(Appointment appointment)throws SQLException {
         Statement stm = JDBC.getConnection().createStatement();
         String query = "DELETE FROM appointments WHERE Appointment_ID=" + appointment.getId() + ";";
         stm.executeUpdate(query);
     }
-
+    /**SQL query to add customer*/
     public static void addCustomer(Customer customer) throws SQLException {
         Statement stm = JDBC.getConnection().createStatement();
         String query = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES ("
@@ -38,12 +37,13 @@ public class Data {
                 + customer.getCity() + ");";
         stm.executeUpdate(query);
     }
+    /**SQL query to remove customer*/
     public static void removeCustomer(Customer customer)throws SQLException {
         Statement stm = JDBC.getConnection().createStatement();
         String query = "DELETE FROM customers WHERE Customer_ID=" + customer.getId() + ";";
         stm.executeUpdate(query);
     }
-
+    /**SQL query to add all apts to an observable list for use on main menu*/
     public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -66,7 +66,7 @@ public class Data {
         stm.close();
         return emptyList;
     }
-
+    /**SQL query to return all apts by current month*/
     public static ObservableList<Appointment> getMonthAppointments() throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -91,7 +91,7 @@ public class Data {
         stm.close();
         return emptyList;
     }
-
+    /**SQL query to return all apts by current week*/
     public static ObservableList<Appointment> getWeekAppointments() throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -116,7 +116,7 @@ public class Data {
         stm.close();
         return emptyList;
     }
-
+    /**SQL query to return all customers in database for use in main menu table*/
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
         ObservableList<Customer> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -135,7 +135,7 @@ public class Data {
         stm.close();
         return emptyList;
     }
-
+    /**SQL query to check a customer has existing apts before deletion*/
     public static boolean validateCustomerDelete(Customer customer) throws SQLException {
         Statement stm = JDBC.getConnection().createStatement();
         String query = "SELECT * \n" +
@@ -147,7 +147,7 @@ public class Data {
         }
         return true;
     }
-
+    /**SQL query to return list of country Ids*/
     public static ObservableList<String> getList(int selection) throws SQLException {
         ObservableList<String> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -159,7 +159,7 @@ public class Data {
         stm.close();
         return emptyList;
     }
-
+    /**SQL query to return country divisions*/
     public static int getDivId(Object selection) throws SQLException {
         int divId = 0;
         ObservableList<String> emptyList = FXCollections.observableArrayList();
@@ -172,7 +172,7 @@ public class Data {
         stm.close();
         return divId;
     }
-
+    /**SQL query to return all contacts*/
     public static ObservableList<String> getContacts() throws SQLException {
         ObservableList<String> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -199,7 +199,7 @@ public class Data {
         stm.close();
         return emptyList;
     }
-
+    /**SQL query to return the associated country with each div Id*/
     public static String getCountry(int selection) throws SQLException {
         String div = "";
         int number = 0;
@@ -221,7 +221,7 @@ public class Data {
         stm.close();
         return div;
     }
-
+    /**SQL query to return divisions by division Id*/
     public static String getState(int selection) throws SQLException {
         String div = "";
         Statement stm = JDBC.getConnection().createStatement();

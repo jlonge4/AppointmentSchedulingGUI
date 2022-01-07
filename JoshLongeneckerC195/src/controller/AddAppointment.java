@@ -115,9 +115,6 @@ public class AddAppointment implements Initializable {
         String endApt = "2020-05-29 13:00:00";
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
-//        String minuteOne =  String.valueOf(minutesOne.getSelectionModel().getSelectedItem());
-//        System.out.println(minuteOne);
-
         try {
             titleApt = title.getText();
         } catch (Exception e) {
