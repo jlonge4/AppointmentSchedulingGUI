@@ -168,17 +168,18 @@ public class AddAppointment implements Initializable {
             alert.setContentText("please fill in or correct the customer name text field");
             alert.showAndWait();
         }
-//        try {
+        try {
             LocalDateTime date = start.getValue().atTime(hoursOne.getSelectionModel().getSelectedIndex(),minutesOne.getSelectionModel().getSelectedIndex());
             startApt = date.format(formatter);
-//        } catch (Exception e) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Add Failed");
-//            alert.setContentText("please fill in or correct the customer name text field");
-//            alert.showAndWait();
-//        }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("please fill in or correct the customer name text field");
+            alert.showAndWait();
+        }
         try {
-//            endApt = end.();
+            LocalDateTime date = end.getValue().atTime(hoursTwo.getSelectionModel().getSelectedIndex(),minutesTwo.getSelectionModel().getSelectedIndex());
+            endApt = date.format(formatter);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");

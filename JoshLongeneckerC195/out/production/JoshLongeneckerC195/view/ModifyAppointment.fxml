@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="446.0" prefWidth="626.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ModifyAppointment">
+   <children>
+       <Label layoutX="29.0" layoutY="28.0" text="Modify Appointment" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect></Label>
+      <Button layoutX="29.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Appointment ID">
+         <font>
+            <Font name="Microsoft Sans Serif" size="12.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+       <Button layoutX="29.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="User ID">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="127.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Customer ID">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="198.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Description">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Title">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="231.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Location">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="154.0" layoutY="402.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Save">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="402.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Cancel">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="293.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Type">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="262.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Contact">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="End Time">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+       <Button layoutX="29.0" layoutY="324.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Start Time">
+           <font>
+               <Font name="Microsoft Sans Serif" size="12.0" />
+           </font>
+           <effect>
+               <DropShadow />
+           </effect>
+       </Button>
+      <TextField fx:id="appointmentId" disable="true" editable="false" layoutX="151.0" layoutY="62.0" promptText="Auto Gen - Disabled" />
+      <TextField fx:id="userId" disable="true" editable="false" layoutX="151.0" layoutY="95.0" />
+      <TextField fx:id="title" layoutX="151.0" layoutY="163.0" />
+      <TextField fx:id="description" layoutX="151.0" layoutY="198.0" />
+      <TextField fx:id="location" layoutX="151.0" layoutY="231.0" />
+       <ComboBox fx:id="contact" layoutX="151.0" layoutY="262.0" prefWidth="150.0" />
+       <ComboBox fx:id="hoursOne" layoutX="347.0" layoutY="324.0" prefHeight="25.0" prefWidth="62.0" />
+       <ComboBox fx:id="minutesTwo" layoutX="429.0" layoutY="356.0" prefHeight="25.0" prefWidth="62.0" />
+       <ComboBox fx:id="hoursTwo" layoutX="347.0" layoutY="356.0" prefHeight="25.0" prefWidth="62.0" />
+       <ComboBox fx:id="minutesOne" layoutX="429.0" layoutY="323.0" prefHeight="25.0" prefWidth="62.0" />
+      <DatePicker fx:id="start" layoutX="151.0" layoutY="324.0" />
+      <DatePicker fx:id="end" layoutX="151.0" layoutY="356.0" />
+      <TextField fx:id="customerId" disable="true" editable="false" layoutX="152.0" layoutY="127.0" />
+      <TextField fx:id="type" layoutX="152.0" layoutY="293.0" />
+      <Label layoutX="332.0" layoutY="327.0" text="H" />
+      <Label layoutX="332.0" layoutY="360.0" text="H" />
+      <Label layoutX="413.0" layoutY="360.0" text="M" />
+      <Label layoutX="413.0" layoutY="327.0" text="M" />
+   </children>
+</AnchorPane>

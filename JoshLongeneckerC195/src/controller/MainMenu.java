@@ -40,6 +40,7 @@ public class MainMenu implements Initializable {
     private static Customer selectedCustomer = null;
     private static Customer selectedAptCustomer = null;
     public static int selectedAptCustomerId;
+    private static Appointment selectedAppointment = null;
     public TableColumn divId;
     public RadioButton month;
     public RadioButton all;
@@ -104,6 +105,25 @@ public class MainMenu implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void modifyAppointment (ActionEvent actionEvent) throws IOException {
+        selectedAppointment= (Appointment) AppointmentTable.getSelectionModel().getSelectedItem();
+        if (selectedAppointment!= null) {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 700, 500);
+            stage.setTitle("modify appointment");
+            stage.setScene(scene);
+            stage.show(); }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Selection Error");
+            alert.setContentText("Please select an appointment to modify");
+            alert.showAndWait();
+        }
+    }
+
+    public static Appointment getselectedAppointment() { return selectedAppointment; }
 
     public void addAppointment (ActionEvent actionEvent) throws IOException, NullPointerException {
         selectedAptCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
@@ -198,12 +218,19 @@ public class MainMenu implements Initializable {
 
     public void updateCustomer (ActionEvent actionEvent) throws IOException {
         selectedCustomer = (Customer) CustomersTable.getSelectionModel().getSelectedItem();
+        if (selectedCustomer!= null) {
         Parent root = FXMLLoader.load(getClass().getResource("/view/UpdateCustomer.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 500);
         stage.setTitle("addCustomer");
         stage.setScene(scene);
-        stage.show();
+        stage.show(); }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Selection Error");
+            alert.setContentText("Please select a customer");
+            alert.showAndWait();
+        }
     }
 
 

@@ -24,7 +24,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button id="button" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Appointment">
+      <Button id="button" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#modifyAppointment" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Appointment">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -32,7 +32,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button layoutX="14.0" layoutY="126.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add Customer">
+      <Button layoutX="14.0" layoutY="126.0" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Add New Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -48,7 +48,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#updateCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Modify Customer">
+      <Button layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#updateCustomer" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Update Customer">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -56,7 +56,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button fx:id="logout" layoutX="15.0" layoutY="452.0" mnemonicParsing="false" onAction="#toLogin" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="logout">
+      <Button fx:id="logout" layoutX="15.0" layoutY="452.0" mnemonicParsing="false" onAction="#toLogin" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Logout">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -72,7 +72,7 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button fx:id="deleteAppointment" layoutX="164.0" layoutY="234.0" mnemonicParsing="false" onAction="#removeAppointment" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Delete Appointment">
+      <Button fx:id="deleteAppointment" layoutX="164.0" layoutY="234.0" mnemonicParsing="false" onAction="#removeAppointment" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Cancel Appointment">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -82,15 +82,15 @@
       </Button>
       <TableView fx:id="AppointmentTable" layoutX="164.0" layoutY="64.0" prefHeight="157.0" prefWidth="840.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
         <columns>
-          <TableColumn fx:id="aptID" prefWidth="106.0" text="Appointment_ID" />
-          <TableColumn fx:id="title" prefWidth="94.0" text="Title" />
-            <TableColumn fx:id="description" prefWidth="93.0" text="Description" />
-            <TableColumn fx:id="location" prefWidth="74.0" text="Location" />
-            <TableColumn fx:id="contact" prefWidth="54.0" text="Contact" />
-            <TableColumn fx:id="type" prefWidth="47.0" text="Type" />
-            <TableColumn fx:id="start" prefWidth="113.0" text="Start Date &amp; Time" />
-            <TableColumn fx:id="end" prefWidth="110.0" text="End Date &amp; Time" />
-            <TableColumn fx:id="custID" prefWidth="89.0" text="Customer_ID" />
+          <TableColumn fx:id="aptID" prefWidth="65.0" text="Apt_ID" />
+          <TableColumn fx:id="title" prefWidth="86.0" text="Title" />
+            <TableColumn fx:id="description" prefWidth="91.0" text="Description" />
+            <TableColumn fx:id="location" prefWidth="90.0" text="Location" />
+            <TableColumn fx:id="contact" prefWidth="52.0" text="Contact" />
+            <TableColumn fx:id="type" prefWidth="67.0" text="Type" />
+            <TableColumn fx:id="start" prefWidth="122.0" text="Start Date &amp; Time" />
+            <TableColumn fx:id="end" prefWidth="128.0" text="End Date &amp; Time" />
+            <TableColumn fx:id="custID" prefWidth="79.0" text="Customer_ID" />
             <TableColumn fx:id="userID" prefWidth="55.0" text="User_ID" />
         </columns>
          <effect>
