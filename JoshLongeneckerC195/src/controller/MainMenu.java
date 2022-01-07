@@ -259,7 +259,7 @@ public class MainMenu implements Initializable {
     public void toGenerateReports (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/GenerateReports.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1100, 500);
+        Scene scene = new Scene(root, 1100, 900);
         stage.setTitle("Generate Reports");
         stage.setScene(scene);
         stage.show();

@@ -22,7 +22,7 @@ public class Data {
         String query = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES ("
                 + appointment.getId() + ", '"
                 + appointment.getTitle() + "', '" + appointment.getDescription() + "', '"
-                + appointment.getLocation() + "', '" + appointment.getType() + "', '" + appointment.getStart() + "', '" + appointment.getEnd() + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + 3 + ");";
+                + appointment.getLocation() + "', '" + appointment.getType() + "', '" + appointment.getStart() + "', '" + appointment.getEnd() + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + appointment.getContact() + ");";
         stm.executeUpdate(query);
     }
     /**SQL query to remove apt from main menu screen*/
@@ -268,6 +268,29 @@ public class Data {
             System.out.println("SQLException: " + e.getMessage());
         }
         return null;
+    }
+
+    public static ObservableList<Appointment> getContactsReports(int selection) throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT * FROM appointments WHERE contact_ID=" + selection + ";";
+        ResultSet rs = stm.executeQuery(query);
+        if(rs.next()) {
+            Appointment appointment;
+            appointment = new Appointment(rs.getInt("Appointment_ID"),
+                    rs.getString("Title"),
+                    rs.getString("Description"),
+                    rs.getString("Location"),
+                    rs.getString("Contact_ID"),
+                    rs.getString("Type"),
+                    rs.getString("Start"),
+                    rs.getString("End"),
+                    rs.getInt("Customer_ID"),
+                    rs.getInt("User_ID"));
+            emptyList.add(appointment);
+        }
+        stm.close();
+        return emptyList;
     }
 
 }

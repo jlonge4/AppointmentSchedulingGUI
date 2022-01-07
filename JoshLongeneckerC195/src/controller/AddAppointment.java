@@ -78,12 +78,12 @@ public class AddAppointment implements Initializable {
         }
 
     }
-
+    /**Increase Count for Random iD*/
     public int increaseCount(int count) {
         count ++;
         return count;
     }
-
+    /**provide random id for new apt*/
     public int randomId() throws SQLException {
         AtomicInteger randomId = new AtomicInteger(increaseCount(Data.getAllAppointments().size()));
         Data.getAllAppointments().forEach((item) -> {
@@ -93,7 +93,7 @@ public class AddAppointment implements Initializable {
         });
         return randomId.get();
     }
-
+    /**navigate back to main menu*/
     public void MainMenu (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -102,7 +102,7 @@ public class AddAppointment implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**save new apt*/
     public void onAppointmentSave(ActionEvent event) throws SQLException, IOException, NullPointerException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
         int appointmentId = randomId();
@@ -140,7 +140,7 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            contactApt = String.valueOf(contact.getSelectionModel().getSelectedItem());
+            contactApt = String.valueOf(contact.getSelectionModel().getSelectedIndex() + 1);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -202,8 +202,14 @@ public class AddAppointment implements Initializable {
         try {
             System.out.println(startApt);
         Appointment appointment = new Appointment(appointmentId, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
-        Data.addAppointment(appointment);
-        MainMenu(event);
+        if (validate(appointment)) {
+            Data.addAppointment(appointment);
+            MainMenu(event);
+        }
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("Invalid appointment");
+            alert.showAndWait();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -211,6 +217,31 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
 
+    }
+    public boolean validate (Appointment appointment) {
+        if (appointment.getId() == 0) {
+            return false;
+        } else if (appointment.getDescription() == "") {
+            return false;
+        } else if (appointment.getDescription() == "") {
+            return false;
+        } else if (appointment.getLocation() == "" ) {
+            return false;
+        } else if (appointment.getContact() == "" ) {
+            return false;
+        } else if (appointment.getType() == "") {
+            return false;
+        } else if (appointment.getStart() == "") {
+            return false;
+        } else if (appointment.getEnd() == "") {
+            return false;
+        } else if (appointment.getCustId() == 0) {
+            return false;
+        } else if (appointment.getUserId() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

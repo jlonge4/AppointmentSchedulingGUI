@@ -107,6 +107,16 @@
             <DropShadow />
          </effect>
       </Label>
+      <RadioButton layoutX="14.0" layoutY="256.0" mnemonicParsing="false" text="RadioButton" />
+      <RadioButton layoutX="107.0" layoutY="256.0" mnemonicParsing="false" text="RadioButton" />
+      <RadioButton layoutX="205.0" layoutY="256.0" mnemonicParsing="false" selected="true" text="Anika Costa">
+         <toggleGroup>
+            <ToggleGroup fx:id="group" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="305.0" layoutY="256.0" mnemonicParsing="false" text="Daniel Garcia" toggleGroup="$group" />
+      <RadioButton layoutX="408.0" layoutY="256.0" mnemonicParsing="false" text="Li Lee" toggleGroup="$group" />
+      <ComboBox fx:id="contacts" layoutX="14.0" layoutY="450.0" onAction="#setContactsTable" prefWidth="150.0" />
 
    </children>
 </AnchorPane>
