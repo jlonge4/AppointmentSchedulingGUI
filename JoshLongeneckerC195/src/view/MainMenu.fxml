@@ -110,12 +110,12 @@
             <DropShadow />
          </effect>
       </TableView>
-      <RadioButton fx:id="week" layoutX="349.0" layoutY="34.0" mnemonicParsing="false" text="Week">
+      <RadioButton fx:id="week" layoutX="349.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAptFilter" text="Week">
          <toggleGroup>
             <ToggleGroup fx:id="group" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="month" layoutX="285.0" layoutY="34.0" mnemonicParsing="false" text="Month" toggleGroup="$group" />
-      <RadioButton fx:id="all" layoutX="241.0" layoutY="34.0" mnemonicParsing="false" selected="true" text="All" toggleGroup="$group" />
+      <RadioButton fx:id="month" layoutX="285.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAptFilter" text="Month" toggleGroup="$group" />
+      <RadioButton fx:id="all" layoutX="241.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleAptFilter" selected="true" text="All" toggleGroup="$group" />
       <Label layoutX="858.0" layoutY="28.0" text="Appointments" textFill="AQUAMARINE">
          <font>
             <Font name="Microsoft Sans Serif" size="24.0" />
@@ -138,7 +138,6 @@
             <DropShadow />
          </effect>
       </Label>
-      <DatePicker layoutX="670.0" layoutY="29.0" />
 
    </children>
 </AnchorPane>

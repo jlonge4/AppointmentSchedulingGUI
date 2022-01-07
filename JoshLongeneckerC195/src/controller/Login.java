@@ -56,14 +56,6 @@ public class Login implements Initializable {
 
     }
 
-    public void toMainMenu (ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 500);
-        stage.setTitle("Appointment Screen");
-        stage.setScene(scene);
-        stage.show();
-    }
     @FXML
     private void onLogin(ActionEvent event) throws IOException, SQLException {
         String user = username.getText();

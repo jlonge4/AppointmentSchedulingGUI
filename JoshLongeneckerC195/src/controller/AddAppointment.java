@@ -63,19 +63,15 @@ public class AddAppointment implements Initializable {
             System.out.println("Selected date: " + date);
         });
 
-        Date date=java.util.Calendar.getInstance().getTime();
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
-        String date1 = format1.format(date);
-
-
-        System.out.println("Add Customer" + date1);
         userId.setText(String.valueOf(Login.returnUser()));
         int id;
         Customer customer;
         customer = MainMenu.getSelectedAptCustomer();
         customerId.setText(String.valueOf(customer.getId()));
         try {
-            contacts = (Data.getContacts());
+            for(String s: Data.getContacts()) {
+                contacts.add(s);
+            }
             contact.setItems(contacts);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -119,6 +115,8 @@ public class AddAppointment implements Initializable {
         String endApt = "2020-05-29 13:00:00";
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
+//        String minuteOne =  String.valueOf(minutesOne.getSelectionModel().getSelectedItem());
+//        System.out.println(minuteOne);
 
         try {
             titleApt = title.getText();
@@ -145,7 +143,7 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            contactApt = (String) contact.getSelectionModel().getSelectedItem();
+            contactApt = String.valueOf(contact.getSelectionModel().getSelectedItem());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -169,16 +167,18 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            LocalDateTime date = start.getValue().atTime(hoursOne.getSelectionModel().getSelectedIndex(),minutesOne.getSelectionModel().getSelectedIndex());
+            String minuteOne =  String.valueOf(minutesOne.getSelectionModel().getSelectedItem());
+            LocalDateTime date = start.getValue().atTime(hoursOne.getSelectionModel().getSelectedIndex(), Integer.parseInt(minuteOne));
             startApt = date.format(formatter);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the start date and time fields");
             alert.showAndWait();
         }
         try {
-            LocalDateTime date = end.getValue().atTime(hoursTwo.getSelectionModel().getSelectedIndex(),minutesTwo.getSelectionModel().getSelectedIndex());
+            String minuteTwo =  String.valueOf(minutesTwo.getSelectionModel().getSelectedItem());
+            LocalDateTime date = end.getValue().atTime(hoursTwo.getSelectionModel().getSelectedIndex(), Integer.parseInt(minuteTwo));
             endApt = date.format(formatter);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -215,27 +215,5 @@ public class AddAppointment implements Initializable {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

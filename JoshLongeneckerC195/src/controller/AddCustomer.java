@@ -51,7 +51,7 @@ public class AddCustomer implements Initializable {
     public void MainMenu (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1200, 500);
+        Scene scene = new Scene(root, 1100, 500);
         stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();
@@ -73,13 +73,7 @@ public class AddCustomer implements Initializable {
     }
 
     public void selectComboContent(ActionEvent event) throws SQLException {
-        if (customerCountry.getSelectionModel().getSelectedItem().equals("US")) {
-            customerState.setItems(Data.getList(1));
-        } else if (customerCountry.getSelectionModel().getSelectedItem().equals("UK")) {
-            customerState.setItems(Data.getList(2));
-        } else {
-            customerState.setItems(Data.getList(3));
-        }
+            customerState.setItems(Data.getList(customerCountry.getSelectionModel().getSelectedIndex() + 1));
     }
 
     public void onCustomerSave(ActionEvent event) throws SQLException, IOException {

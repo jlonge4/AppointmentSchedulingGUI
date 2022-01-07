@@ -67,6 +67,56 @@ public class Data {
         return emptyList;
     }
 
+    public static ObservableList<Appointment> getMonthAppointments() throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "select * from appointments\n" +
+                "where MONTH(start)=MONTH(now())\n" +
+                "and YEAR(start)=YEAR(now());";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            Appointment appointment = new Appointment (
+                    rs.getInt("Appointment_ID"),
+                    rs.getString("Title"),
+                    rs.getString("Description"),
+                    rs.getString("Location"),
+                    rs.getString("Contact_ID"),
+                    rs.getString("Type"),
+                    rs.getString("Start"),
+                    rs.getString("End"),
+                    rs.getInt("Customer_ID"),
+                    rs.getInt("User_ID"));
+            emptyList.add(appointment);
+        }
+        stm.close();
+        return emptyList;
+    }
+
+    public static ObservableList<Appointment> getWeekAppointments() throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "select * from appointments\n" +
+                "where WEEK(start)=WEEK(now())\n" +
+                "and YEAR(start)=YEAR(now());";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            Appointment appointment = new Appointment (
+                    rs.getInt("Appointment_ID"),
+                    rs.getString("Title"),
+                    rs.getString("Description"),
+                    rs.getString("Location"),
+                    rs.getString("Contact_ID"),
+                    rs.getString("Type"),
+                    rs.getString("Start"),
+                    rs.getString("End"),
+                    rs.getInt("Customer_ID"),
+                    rs.getInt("User_ID"));
+            emptyList.add(appointment);
+        }
+        stm.close();
+        return emptyList;
+    }
+
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
         ObservableList<Customer> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -134,6 +184,7 @@ public class Data {
         stm.close();
         return emptyList;
     }
+
 
     public static ObservableList<String> getDiv(int selection) throws SQLException {
         String div = "";

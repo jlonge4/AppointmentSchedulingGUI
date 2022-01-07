@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +19,8 @@ import model.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class MainMenu implements Initializable {
@@ -59,7 +63,7 @@ public class MainMenu implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-//            CustomersTable.getItems().clear();
+            CustomersTable.getItems().clear();
         try{
             CustomersTable.setItems(Data.getAllCustomers());
         } catch (SQLException throwables) {
@@ -87,6 +91,18 @@ public class MainMenu implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divId.setCellValueFactory(new PropertyValueFactory<>("city"));
 
+    }
+
+    public void handleAptFilter () throws SQLException {
+        AppointmentTable.getItems().clear();
+        if(month.isSelected()) {
+           AppointmentTable.setItems(Data.getMonthAppointments());
+       } else if (week.isSelected()) {
+           AppointmentTable.setItems(Data.getWeekAppointments());
+
+       } else {
+            AppointmentTable.setItems(Data.getAllAppointments());
+        }
     }
 
     public void toLogin (ActionEvent actionEvent) throws IOException {
