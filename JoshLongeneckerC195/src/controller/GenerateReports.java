@@ -34,6 +34,17 @@ public class GenerateReports implements Initializable {
     public TableColumn endT;
     public TableColumn custIDT;
     public TableColumn userIDT;
+    public TableColumn aptID;
+    public TableColumn title;
+    public TableColumn description;
+    public TableColumn location;
+    public TableColumn contact;
+    public TableColumn type;
+    public TableColumn start;
+    public TableColumn end;
+    public TableColumn custID;
+    public TableColumn userID;
+    public TableView AppointmentTable;
     private ObservableList<String> contactsList = FXCollections.observableArrayList();
 
 
@@ -46,6 +57,17 @@ public class GenerateReports implements Initializable {
             throwables.printStackTrace();
         }
         System.out.println("Generate Reports");
+
+        aptID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        location.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        start.setCellValueFactory(new PropertyValueFactory<>("start"));
+        end.setCellValueFactory(new PropertyValueFactory<>("end"));
+        custID.setCellValueFactory(new PropertyValueFactory<>("custId"));
+        userID.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         aptIDT.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleT.setCellValueFactory(new PropertyValueFactory<>("title"));

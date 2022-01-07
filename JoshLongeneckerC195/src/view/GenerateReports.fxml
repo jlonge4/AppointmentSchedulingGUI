@@ -78,7 +78,7 @@
             <DropShadow />
          </effect>
       </TableView>
-      <Label layoutX="555.0" layoutY="61.0" text="Appointments by Type and Month" textFill="AQUAMARINE">
+      <Label layoutX="555.0" layoutY="61.0" text="Appointments by Type or Month" textFill="AQUAMARINE">
          <font>
             <Font name="Microsoft Sans Serif" size="20.0" />
          </font>
@@ -94,7 +94,7 @@
             <DropShadow />
          </effect>
       </Label>
-      <Label layoutX="257.0" layoutY="65.0" text="Filter By:">
+      <Label layoutX="289.0" layoutY="65.0" text="Filter By:">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -107,15 +107,13 @@
             <DropShadow />
          </effect>
       </Label>
-      <RadioButton layoutX="14.0" layoutY="256.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton layoutX="107.0" layoutY="256.0" mnemonicParsing="false" text="RadioButton" />
-      <RadioButton layoutX="205.0" layoutY="256.0" mnemonicParsing="false" selected="true" text="Anika Costa">
+      <RadioButton layoutX="330.0" layoutY="256.0" mnemonicParsing="false" text="Scheduled" />
+      <RadioButton layoutX="421.0" layoutY="256.0" mnemonicParsing="false" text="Non-Scheduled" />
+      <RadioButton layoutX="345.0" layoutY="64.0" mnemonicParsing="false" text="Type">
          <toggleGroup>
             <ToggleGroup fx:id="group" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton layoutX="305.0" layoutY="256.0" mnemonicParsing="false" text="Daniel Garcia" toggleGroup="$group" />
-      <RadioButton layoutX="408.0" layoutY="256.0" mnemonicParsing="false" text="Li Lee" toggleGroup="$group" />
+         </toggleGroup></RadioButton>
+      <RadioButton layoutX="400.0" layoutY="64.0" mnemonicParsing="false" text="Month" toggleGroup="$group" />
       <ComboBox fx:id="contacts" layoutX="14.0" layoutY="450.0" onAction="#setContactsTable" prefWidth="150.0" />
 
    </children>

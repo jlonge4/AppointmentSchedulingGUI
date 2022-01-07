@@ -41,6 +41,7 @@ public class AddAppointment implements Initializable {
     public ComboBox minutesTwo;
     public ComboBox hoursTwo;
     public ComboBox minutesOne;
+    private Appointment appointment;
     private ObservableList<String> contacts = FXCollections.observableArrayList();
     ObservableList<String> hours = FXCollections.observableArrayList();
     ObservableList<String> minutes = FXCollections.observableArrayList();
@@ -107,12 +108,12 @@ public class AddAppointment implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
         int appointmentId = randomId();
         String titleApt = "";
-        String descriptionApt = null;
-        String locationApt = null;
-        String contactApt = null;
-        String typeApt = null;
-        String startApt = null;
-        String endApt = null;
+        String descriptionApt = "";
+        String locationApt = "";
+        String contactApt = "";
+        String typeApt = "";
+        String startApt = "";
+        String endApt = "";
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
         try {
@@ -200,25 +201,26 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            System.out.println(startApt);
-        Appointment appointment = new Appointment(appointmentId, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
-        if (validate(appointment)) {
-            Data.addAppointment(appointment);
-            MainMenu(event);
-        }
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Add Failed");
-            alert.setContentText("Invalid appointment");
-            alert.showAndWait();
+            System.out.println(startApt + contactApt);
+            appointment = new Appointment(appointmentId, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
             alert.setContentText("Invalid Appointment");
             alert.showAndWait();
         }
+        if (validate(appointment)) {
+            Data.addAppointment(appointment);
+            MainMenu(event);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("Invalid appointment");
+            alert.showAndWait();
+        }
 
     }
-    public boolean validate (Appointment appointment) {
+    public static boolean validate(Appointment appointment) {
         if (appointment.getId() == 0) {
             return false;
         } else if (appointment.getDescription() == "") {

@@ -293,4 +293,16 @@ public class Data {
         return emptyList;
     }
 
+//    public static int Id getContactsId(String selection) throws SQLException {
+//        int ID = 0;
+//        Statement stm = JDBC.getConnection().createStatement();
+//        String query = "SELECT * FROM contacts WHERE Contact_Name='" + selection + "';";
+//        ResultSet rs = stm.executeQuery(query);
+//        while(rs.next()) {
+//            ID = Integer.parseInt(rs.getString("Contact_ID"));
+//        }
+//        stm.close();
+//        return ID;
+//    }
+
 }

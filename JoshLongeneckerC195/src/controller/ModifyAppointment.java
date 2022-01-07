@@ -118,14 +118,14 @@ public class ModifyAppointment implements Initializable {
 
     public void onAppointmentSave(ActionEvent event) throws SQLException, IOException, NullPointerException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
-        int appointmentIdNew = Integer.parseInt(appointmentId.getText());
-        String titleApt = null;
-        String descriptionApt = null;
-        String locationApt = null;
-        String contactApt = null;
-        String typeApt = null;
-        String startApt = null;
-        String endApt = null;
+        int appointmentIdNew = 1 + Integer.parseInt(appointmentId.getText());
+        String titleApt = "";
+        String descriptionApt = "";
+        String locationApt = "";
+        String contactApt = "";
+        String typeApt = "";
+        String startApt = "";
+        String endApt = "";
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
 
@@ -154,7 +154,7 @@ public class ModifyAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            contactApt = String.valueOf(contact.getSelectionModel().getSelectedItem());
+            contactApt = String.valueOf(contact.getSelectionModel().getSelectedIndex() + 1);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -216,10 +216,24 @@ public class ModifyAppointment implements Initializable {
         try {
             System.out.println(startApt);
             appointmentNew = new Appointment(appointmentIdNew, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
-            Data.removeAppointment(appointmentOld);
-            Data.addAppointment(appointmentNew);
-            MainMenu(event);
         } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Add Failed");
+            alert.setContentText("please fill in or correct the appointment text fields");
+            alert.showAndWait();
+        }
+        if (AddAppointment.validate(appointmentNew)) {
+           try {
+               Data.addAppointment(appointmentNew);
+               Data.removeAppointment(appointmentOld);
+               MainMenu(event);
+           } catch (Exception e) {
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+               alert.setTitle("Add Failed");
+               alert.setContentText("please fill in or correct the appointment text fields");
+               alert.showAndWait();
+           }
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
             alert.setContentText("please fill in or correct the appointment text fields");
