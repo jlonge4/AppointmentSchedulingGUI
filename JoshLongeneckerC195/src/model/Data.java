@@ -191,20 +191,19 @@ public class Data {
         return emptyList;
     }
 
-
-    public static ObservableList<String> getDiv(int selection) throws SQLException {
-        String div = "";
+    public static String getContactsByID(String selection) throws SQLException {
         ObservableList<String> emptyList = FXCollections.observableArrayList();
+        String string = "";
         Statement stm = JDBC.getConnection().createStatement();
-        String query = "SELECT * FROM first_level_divisions WHERE Division_ID=" + selection + ";";
+        String query = "SELECT * FROM contacts WHERE Contact_ID=" + selection + ";";
         ResultSet rs = stm.executeQuery(query);
         while(rs.next()) {
-            div = rs.getString("Division");
+            string = rs.getString("Contact_Name");
         }
-        emptyList.add(div);
         stm.close();
-        return emptyList;
+        return string;
     }
+
     /**SQL query to return the associated country with each div Id*/
     public static String getCountry(int selection) throws SQLException {
         String div = "";
@@ -239,7 +238,7 @@ public class Data {
         stm.close();
         return div;
     }
-
+    /**method to prompt 15 min apt alert*/
     public static Appointment appointment15MinAlert() {
         Appointment appointment;
         LocalDateTime now = LocalDateTime.now();
@@ -271,7 +270,7 @@ public class Data {
         }
         return null;
     }
-
+    /**method to populate report for apts by contact*/
     public static ObservableList<Appointment> getContactsReports(int selection) throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -321,6 +320,28 @@ public class Data {
           return emptyListB;
         }
 
+    }
+    public static ObservableList<Appointment> filterAptType(String selection) throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "Select * FROM appointments WHERE Type='" + selection + "';";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            Appointment appointment = new Appointment (
+                    rs.getInt("Appointment_ID"),
+                    rs.getString("Title"),
+                    rs.getString("Description"),
+                    rs.getString("Location"),
+                    rs.getString("Contact_ID"),
+                    rs.getString("Type"),
+                    rs.getString("Start"),
+                    rs.getString("End"),
+                    rs.getInt("Customer_ID"),
+                    rs.getInt("User_ID"));
+            emptyList.add(appointment);
+        }
+        stm.close();
+        return emptyList;
     }
 
 }

@@ -38,20 +38,40 @@ public class ModifyAppointment implements Initializable {
     public DatePicker end;
     public TextField customerId;
     public TextField type;
+    public ComboBox typeCombo;
     private Appointment appointmentNew;
     private static Appointment appointmentOld;
     private ObservableList<String> contacts = FXCollections.observableArrayList();
+    ObservableList<String> types = FXCollections.observableArrayList("Planning Session" , "New Appointment");
     ObservableList<String> hours = FXCollections.observableArrayList("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
             "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
     ObservableList<String> minutes = FXCollections.observableArrayList("00", "15", "30", "45");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        typeCombo.setItems(types);
         hoursOne.setItems(hours);
         hoursTwo.setItems(hours);
         minutesOne.setItems(minutes);
         minutesTwo.setItems(minutes);
+
+        start.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+        end.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+
         start.setOnAction(event -> {
             LocalDate date = start.getValue();
             System.out.println("Selected date: " + date);
@@ -69,7 +89,7 @@ public class ModifyAppointment implements Initializable {
         description.setText(appointmentOld.getDescription());
         location.setText(appointmentOld.getLocation());
         customerId.setText(String.valueOf(appointmentOld.getCustId()));
-        type.setText(appointmentOld.getType());
+        typeCombo.setValue(appointmentOld.getType());
 
         String dateTimeStart = appointmentOld.getStart();
         dateTimeStart = dateTimeStart.substring(0,10);
@@ -98,15 +118,21 @@ public class ModifyAppointment implements Initializable {
         minutesTwo.setValue(mOneTimeEnd);
 
         try {
-            contacts = (Data.getContacts());
+            for(String s: Data.getContacts()) {
+                contacts.add(s);
+            }
             contact.setItems(contacts);
-            contact.setValue(appointmentOld.getContact());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+        try {
+            contact.getSelectionModel().select(Data.getContactsByID(appointmentOld.getContact()));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
-
+    /**navigate back to main menu*/
     public void MainMenu (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -115,10 +141,10 @@ public class ModifyAppointment implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**saves modified apt*/
     public void onAppointmentSave(ActionEvent event) throws SQLException, IOException, NullPointerException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
-        int appointmentIdNew = 1 + Integer.parseInt(appointmentId.getText());
+        int appointmentIdNew = Integer.parseInt(appointmentId.getText());
         String titleApt = "";
         String descriptionApt = "";
         String locationApt = "";
@@ -134,7 +160,7 @@ public class ModifyAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the title text field");
             alert.showAndWait();
         }
         try {
@@ -142,7 +168,7 @@ public class ModifyAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the description text field");
             alert.showAndWait();
         }
         try {
@@ -150,7 +176,7 @@ public class ModifyAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the location text field");
             alert.showAndWait();
         }
         try {
@@ -158,15 +184,15 @@ public class ModifyAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the contact field");
             alert.showAndWait();
         }
         try {
-            typeApt = type.getText();
+            typeApt = (String) typeCombo.getSelectionModel().getSelectedItem();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the type field");
             alert.showAndWait();
         }
         try {
@@ -174,7 +200,7 @@ public class ModifyAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the description text field");
             alert.showAndWait();
         }
         try {
@@ -202,7 +228,7 @@ public class ModifyAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the customer ID text field");
             alert.showAndWait();
         }
         try {
@@ -210,33 +236,27 @@ public class ModifyAppointment implements Initializable {
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the customer name text field");
+            alert.setContentText("please fill in or correct the user ID text field");
             alert.showAndWait();
         }
         try {
             System.out.println(startApt);
             appointmentNew = new Appointment(appointmentIdNew, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
+            if (AddAppointment.validate(appointmentNew)) {
+                System.out.println(appointmentIdNew + titleApt + descriptionApt + locationApt + contactApt + typeApt + startApt + endApt + custIdApt + userIdApt);
+                    Data.removeAppointment(appointmentOld);
+                    Data.addAppointment(appointmentNew);
+                    MainMenu(event);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Add Failed");
+                alert.setContentText("please fill in or correct the appointment text fields");
+                alert.showAndWait();
+            }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the appointment text fields");
-            alert.showAndWait();
-        }
-        if (AddAppointment.validate(appointmentNew)) {
-           try {
-               Data.addAppointment(appointmentNew);
-               Data.removeAppointment(appointmentOld);
-               MainMenu(event);
-           } catch (Exception e) {
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("Add Failed");
-               alert.setContentText("please fill in or correct the appointment text fields");
-               alert.showAndWait();
-           }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Add Failed");
-            alert.setContentText("please fill in or correct the appointment text fields");
+            alert.setContentText("Invalid Appointmentr");
             alert.showAndWait();
         }
     }

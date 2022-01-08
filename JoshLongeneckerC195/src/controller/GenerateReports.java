@@ -15,6 +15,7 @@ import model.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class GenerateReports implements Initializable {
@@ -49,15 +50,27 @@ public class GenerateReports implements Initializable {
     public TableColumn postalCode;
     public TableColumn phone;
     public TableColumn divId;
-    public RadioButton month;
+
     public RadioButton typeRadio;
     public RadioButton scheduled;
     public RadioButton nonScheduled;
+    public ComboBox typeApt;
+    public DatePicker month;
     private ObservableList<String> contactsList = FXCollections.observableArrayList();
+    ObservableList<String> types = FXCollections.observableArrayList("Planning Session" , "New Appointment");
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        month.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+
         try {
             contacts.setItems(Data.getContacts());
             AppointmentTableTwo.setItems(Data.getAllAppointments());
@@ -100,8 +113,9 @@ public class GenerateReports implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        typeApt.setItems(types);
     }
-
+    /**navigate back to main menu*/
     public void MainMenu (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -110,21 +124,20 @@ public class GenerateReports implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**set apt table by contact selection*/
     public void setContactsTable () throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         int selection = contacts.getSelectionModel().getSelectedIndex() + 1;
         emptyList = Data.getContactsReports(selection);
         AppointmentTableTwo.setItems(emptyList);
     }
-
-    public void setAptByMonthTable () throws SQLException {
-        if(month.isSelected()) {
+    /**set apt table by months apts*/
+    public void setAptByMonthTable() throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        AppointmentTable.setItems(emptyList);
             AppointmentTable.setItems(Data.getMonthAppointments());
-        } else if (typeRadio.isSelected()) {
-            System.out.println("I giver up");
-        }
     }
-
+    /**set customer table by nonscheduled or scheduled*/
     public void setCustomerAptTable() throws SQLException {
         if (scheduled.isSelected()) {
             CustomersTable.setItems(Data.customerWithApts(true));
@@ -133,6 +146,13 @@ public class GenerateReports implements Initializable {
         } else {
             CustomersTable.setItems(Data.getAllCustomers());
         }
+    }
+    /**Set apt table by type of apt*/
+    public void setByTypeTable() throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        AppointmentTable.setItems(emptyList);
+        AppointmentTable.setItems(Data.filterAptType((String) typeApt.getSelectionModel().getSelectedItem()));
+
     }
 
 }

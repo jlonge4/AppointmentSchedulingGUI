@@ -133,13 +133,7 @@ public class UpdateCustomer implements Initializable {
         customerNew = new Customer(id,name,address,postalCode,phone,city);
         Data.removeCustomer(customerOld);
         Data.addCustomer(customerNew);
-
-        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1200, 500);
-        stage.setTitle("Main Menu");
-        stage.setScene(scene);
-        stage.show();
+        MainMenu(actionEvent);
     }
     public void MainMenu (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));

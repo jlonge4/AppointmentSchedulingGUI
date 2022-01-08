@@ -16,6 +16,7 @@ import model.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -41,20 +42,40 @@ public class AddAppointment implements Initializable {
     public ComboBox minutesTwo;
     public ComboBox hoursTwo;
     public ComboBox minutesOne;
+    public ComboBox typeCombo;
     private Appointment appointment;
     private ObservableList<String> contacts = FXCollections.observableArrayList();
-    ObservableList<String> hours = FXCollections.observableArrayList();
-    ObservableList<String> minutes = FXCollections.observableArrayList();
+    ObservableList<String> hours = FXCollections.observableArrayList("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+    ObservableList<String> minutes = FXCollections.observableArrayList("00", "15", "30", "45");
+    ObservableList<String> types = FXCollections.observableArrayList("Planning Session" , "New Appointment");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        hours.addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
-        minutes.addAll("00", "15", "30", "45");
+        typeCombo.setItems(types);
         hoursOne.setItems(hours);
         hoursTwo.setItems(hours);
         minutesOne.setItems(minutes);
         minutesTwo.setItems(minutes);
+
+        start.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+        end.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0 );
+            }
+        });
+
+
         start.setOnAction(event -> {
             LocalDate date = start.getValue();
             System.out.println("Selected date: " + date);
@@ -149,7 +170,7 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            typeApt = type.getText();
+            typeApt = (String) typeCombo.getSelectionModel().getSelectedItem();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
