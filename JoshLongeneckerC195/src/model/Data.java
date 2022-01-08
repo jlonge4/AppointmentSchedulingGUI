@@ -293,16 +293,15 @@ public class Data {
         return emptyList;
     }
 
-//    public static int Id getContactsId(String selection) throws SQLException {
-//        int ID = 0;
-//        Statement stm = JDBC.getConnection().createStatement();
-//        String query = "SELECT * FROM contacts WHERE Contact_Name='" + selection + "';";
-//        ResultSet rs = stm.executeQuery(query);
-//        while(rs.next()) {
-//            ID = Integer.parseInt(rs.getString("Contact_ID"));
+//    public static ObservableList<Customer> customerApts(String selection) throws SQLException {
+//        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+//        ObservableList<Customer> emptyListA = FXCollections.observableArrayList();
+//        ObservableList<Customer> emptyListB = FXCollections.observableArrayList();
+//        emptyList = Data.getAllAppointments();
+//        emptyListB = Data.getAllCustomers();
+//        for (Customer c: emptyListB) {
+//            c.getId()
 //        }
-//        stm.close();
-//        return ID;
 //    }
 
 }

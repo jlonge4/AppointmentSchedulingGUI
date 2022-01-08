@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
@@ -45,6 +42,14 @@ public class GenerateReports implements Initializable {
     public TableColumn custID;
     public TableColumn userID;
     public TableView AppointmentTable;
+    public TableView CustomersTable;
+    public TableColumn customerID;
+    public TableColumn name;
+    public TableColumn address;
+    public TableColumn postalCode;
+    public TableColumn phone;
+    public TableColumn divId;
+    public RadioButton month;
     private ObservableList<String> contactsList = FXCollections.observableArrayList();
 
 
@@ -57,7 +62,7 @@ public class GenerateReports implements Initializable {
             throwables.printStackTrace();
         }
         System.out.println("Generate Reports");
-
+        /**apt table 1**/
         aptID.setCellValueFactory(new PropertyValueFactory<>("id"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -68,7 +73,7 @@ public class GenerateReports implements Initializable {
         end.setCellValueFactory(new PropertyValueFactory<>("end"));
         custID.setCellValueFactory(new PropertyValueFactory<>("custId"));
         userID.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
+        /**apt table 2**/
         aptIDT.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleT.setCellValueFactory(new PropertyValueFactory<>("title"));
         descriptionT.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -79,6 +84,13 @@ public class GenerateReports implements Initializable {
         endT.setCellValueFactory(new PropertyValueFactory<>("end"));
         custIDT.setCellValueFactory(new PropertyValueFactory<>("custId"));
         userIDT.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        /**customers table**/
+        customerID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        divId.setCellValueFactory(new PropertyValueFactory<>("city"));
 
 
     }
@@ -96,6 +108,12 @@ public class GenerateReports implements Initializable {
         int selection = contacts.getSelectionModel().getSelectedIndex() + 1;
         emptyList = Data.getContactsReports(selection);
         AppointmentTableTwo.setItems(emptyList);
+    }
+
+    public void setAptByMonthTable () throws SQLException {
+        if(month.isSelected()) {
+            AppointmentTable.setItems(Data.getMonthAppointments());
+        }
     }
 
 }

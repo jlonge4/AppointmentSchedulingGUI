@@ -113,7 +113,7 @@
          <toggleGroup>
             <ToggleGroup fx:id="group" />
          </toggleGroup></RadioButton>
-      <RadioButton layoutX="400.0" layoutY="64.0" mnemonicParsing="false" text="Month" toggleGroup="$group" />
+      <RadioButton fx:id="month" layoutX="400.0" layoutY="64.0" mnemonicParsing="false" onAction="#setAptByMonthTable" selected="true" text="Month" toggleGroup="$group" />
       <ComboBox fx:id="contacts" layoutX="14.0" layoutY="450.0" onAction="#setContactsTable" prefWidth="150.0" />
 
    </children>
