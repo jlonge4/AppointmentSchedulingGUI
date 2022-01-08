@@ -107,9 +107,12 @@
             <DropShadow />
          </effect>
       </Label>
-      <RadioButton layoutX="330.0" layoutY="256.0" mnemonicParsing="false" text="Scheduled" />
-      <RadioButton layoutX="421.0" layoutY="256.0" mnemonicParsing="false" text="Non-Scheduled" />
-      <RadioButton layoutX="345.0" layoutY="64.0" mnemonicParsing="false" text="Type">
+      <RadioButton fx:id="scheduled" layoutX="330.0" layoutY="256.0" mnemonicParsing="false" onAction="#setCustomerAptTable" selected="true" text="Scheduled">
+         <toggleGroup>
+            <ToggleGroup fx:id="group2" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="nonScheduled" layoutX="421.0" layoutY="256.0" mnemonicParsing="false" onAction="#setCustomerAptTable" text="Non-Scheduled" toggleGroup="$group2" />
+      <RadioButton fx:id="typeRadio" layoutX="345.0" layoutY="64.0" mnemonicParsing="false" text="Type">
          <toggleGroup>
             <ToggleGroup fx:id="group" />
          </toggleGroup></RadioButton>

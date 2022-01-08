@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Data {
 
@@ -292,16 +294,33 @@ public class Data {
         stm.close();
         return emptyList;
     }
+    /**lambda expression to add customer Ids from scheduled apts into a set to ensure no redundant data, used later to compare customer Ids to all customers Ids*/
+    /**lambda expression to remove scheduled customers from all customers list, leaving only non schedulded customers*/
+    public static ObservableList<Customer> customerWithApts(boolean scheduled) throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        ObservableList<Customer> emptyListA = FXCollections.observableArrayList();
+        ObservableList<Customer> emptyListB = FXCollections.observableArrayList();
+        Set<Integer> set = new HashSet<>();
+        emptyList = Data.getAllAppointments();
+        emptyListB = Data.getAllCustomers();
+        /**lambda expression to add customer Ids from scheduled apts into a set to ensure no redundant data, used later to compare customer Ids to all customers Ids*/
+        emptyList.forEach( (a -> {  set.add(a.getCustId()); }));
+        for (int i : set) {
+            for(Customer c : emptyListB) {
+                if (c.getId() == i) {
+                    emptyListA.add(c);
+                }
+            }
+        }
+        if (scheduled) {
+            return emptyListA;
+        } else {
+            ObservableList<Customer> finalEmptyListB = emptyListB;
+            /**lambda expression to remove scheduled customers from all customers list, leaving only non schedulded customers*/
+            emptyListA.forEach( (c) -> { finalEmptyListB.remove(c); } );
+          return emptyListB;
+        }
 
-//    public static ObservableList<Customer> customerApts(String selection) throws SQLException {
-//        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
-//        ObservableList<Customer> emptyListA = FXCollections.observableArrayList();
-//        ObservableList<Customer> emptyListB = FXCollections.observableArrayList();
-//        emptyList = Data.getAllAppointments();
-//        emptyListB = Data.getAllCustomers();
-//        for (Customer c: emptyListB) {
-//            c.getId()
-//        }
-//    }
+    }
 
 }

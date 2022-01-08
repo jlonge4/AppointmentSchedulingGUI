@@ -50,6 +50,9 @@ public class GenerateReports implements Initializable {
     public TableColumn phone;
     public TableColumn divId;
     public RadioButton month;
+    public RadioButton typeRadio;
+    public RadioButton scheduled;
+    public RadioButton nonScheduled;
     private ObservableList<String> contactsList = FXCollections.observableArrayList();
 
 
@@ -92,7 +95,11 @@ public class GenerateReports implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divId.setCellValueFactory(new PropertyValueFactory<>("city"));
 
-
+        try {
+            setCustomerAptTable();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void MainMenu (ActionEvent actionEvent) throws IOException {
@@ -113,6 +120,18 @@ public class GenerateReports implements Initializable {
     public void setAptByMonthTable () throws SQLException {
         if(month.isSelected()) {
             AppointmentTable.setItems(Data.getMonthAppointments());
+        } else if (typeRadio.isSelected()) {
+            System.out.println("I giver up");
+        }
+    }
+
+    public void setCustomerAptTable() throws SQLException {
+        if (scheduled.isSelected()) {
+            CustomersTable.setItems(Data.customerWithApts(true));
+        } else if (nonScheduled.isSelected()) {
+            CustomersTable.setItems(Data.customerWithApts(false));
+        } else {
+            CustomersTable.setItems(Data.getAllCustomers());
         }
     }
 
