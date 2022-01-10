@@ -3,6 +3,8 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDateTime;
+
 public class Appointment {
     private int id;
     private String title;
@@ -10,13 +12,13 @@ public class Appointment {
     private String location;
     private String contact;
     private String type;
-    private String start;
-    private String end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int custId;
     private int userId;
     public static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
-    public Appointment(int id, String title, String description, String location, String contact, String type, String start, String end, int custId, int userId) {
+    public Appointment(int id, String title, String description, String location, String contact, String type, LocalDateTime start, LocalDateTime end, int custId, int userId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -77,19 +79,19 @@ public class Appointment {
         this.type = type;
     }
 
-    public String getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 
@@ -109,24 +111,4 @@ public class Appointment {
         this.userId = userId;
     }
 
-//    public static ObservableList<Appointment> getAllAppointments() throws SQLException {
-//        Statement stm = JDBC.getConnection().createStatement();
-//        String query = "Select * FROM appointments;";
-//        ResultSet rs = stm.executeQuery(query);
-//        while(rs.next()) {
-//            Appointment appointment = new Appointment (
-//                    rs.getInt("Appointment_ID"),
-//                    rs.getString("Title"),
-//                    rs.getString("Description"),
-//                    rs.getString("Location"),
-//                    rs.getString("Contact_ID"),
-//                    rs.getString("Type"),
-//                    rs.getString("Start"),
-//                    rs.getString("End"),
-//                    rs.getInt("Customer_ID"),
-//                    rs.getInt("User_ID"));
-//            allAppointments.setAll(appointment);
-//        }
-//        return allAppointments;
-//    }
 }

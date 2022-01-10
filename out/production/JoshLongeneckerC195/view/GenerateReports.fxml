@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="705.0" prefWidth="862.0" style="-fx-background-color: lightslategray; -fx-border-color: cadetblue; -fx-border-width: 6; -fx-border-radius: 20; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GenerateReports">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Generate" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
+      <Label layoutX="22.0" layoutY="41.0" text="Reports" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="24.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
+      <Button fx:id="deleteCustomer" layoutX="381.0" layoutY="659.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: aquamarine; -fx-background-radius: 8;" text="Main Menu">
+         <font>
+            <Font name="Microsoft Sans Serif" size="12.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
+      <TableView fx:id="AppointmentTable" layoutX="14.0" layoutY="87.0" prefHeight="157.0" prefWidth="840.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
+        <columns>
+          <TableColumn fx:id="aptID" prefWidth="65.0" text="Apt_ID" />
+          <TableColumn fx:id="title" prefWidth="86.0" text="Title" />
+            <TableColumn fx:id="description" prefWidth="91.0" text="Description" />
+            <TableColumn fx:id="location" prefWidth="90.0" text="Location" />
+            <TableColumn fx:id="contact" prefWidth="52.0" text="Contact" />
+            <TableColumn fx:id="type" prefWidth="67.0" text="Type" />
+            <TableColumn fx:id="start" prefWidth="122.0" text="Start Date &amp; Time" />
+            <TableColumn fx:id="end" prefWidth="128.0" text="End Date &amp; Time" />
+            <TableColumn fx:id="custID" prefWidth="79.0" text="Customer_ID" />
+            <TableColumn fx:id="userID" prefWidth="55.0" text="User_ID" />
+        </columns>
+         <effect>
+            <DropShadow />
+         </effect>
+      </TableView>
+      <TableView fx:id="AppointmentTableTwo" layoutX="14.0" layoutY="486.0" prefHeight="157.0" prefWidth="840.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
+         <columns>
+            <TableColumn fx:id="aptIDT" prefWidth="65.0" text="Apt_ID" />
+            <TableColumn fx:id="titleT" prefWidth="86.0" text="Title" />
+            <TableColumn fx:id="descriptionT" prefWidth="91.0" text="Description" />
+            <TableColumn fx:id="locationT" prefWidth="90.0" text="Location" />
+            <TableColumn fx:id="contactT" prefWidth="52.0" text="Contact" />
+            <TableColumn fx:id="typeT" prefWidth="67.0" text="Type" />
+            <TableColumn fx:id="startT" prefWidth="122.0" text="Start Date &amp; Time" />
+            <TableColumn fx:id="endT" prefWidth="128.0" text="End Date &amp; Time" />
+            <TableColumn fx:id="custIDT" prefWidth="79.0" text="Customer_ID" />
+            <TableColumn fx:id="userIDT" prefWidth="55.0" text="User_ID" />
+         </columns>
+         <effect>
+            <DropShadow />
+         </effect>
+      </TableView>
+      <TableView fx:id="CustomersTable" layoutX="14.0" layoutY="284.0" prefHeight="157.0" prefWidth="840.0" style="-fx-border-color: aquamarine; -fx-border-radius: 8; -fx-background-color: white; -fx-background-radius: 8;">
+         <columns>
+            <TableColumn fx:id="customerID" prefWidth="82.0" text="Customer_ID" />
+            <TableColumn fx:id="name" prefWidth="207.0" text="Customer_Name" />
+            <TableColumn fx:id="address" prefWidth="226.0" text="Address" />
+            <TableColumn fx:id="postalCode" minWidth="0.0" prefWidth="107.0" text="Postal Code" />
+            <TableColumn fx:id="phone" prefWidth="149.0" text="Phone" />
+            <TableColumn fx:id="divId" text="Div_ID" />
+         </columns>
+         <effect>
+            <DropShadow />
+         </effect>
+      </TableView>
+      <Label layoutX="555.0" layoutY="61.0" text="Appointments by Type or Month" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
+      <Label layoutX="630.0" layoutY="451.0" text="Appointments by Contact" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
+      <Label layoutX="134.0" layoutY="65.0" text="Filter By Type or Month:">
+         <font>
+            <Font name="Microsoft Sans Serif" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="570.0" layoutY="253.0" text="Customers Currently Scheduled" textFill="AQUAMARINE">
+         <font>
+            <Font name="Microsoft Sans Serif" size="20.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Label>
+      <RadioButton fx:id="scheduled" layoutX="22.0" layoutY="256.0" mnemonicParsing="false" onAction="#setCustomerAptTable" selected="true" text="Scheduled">
+         <toggleGroup>
+            <ToggleGroup fx:id="group2" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="nonScheduled" layoutX="107.0" layoutY="256.0" mnemonicParsing="false" onAction="#setCustomerAptTable" text="Non-Scheduled" toggleGroup="$group2" />
+      <ComboBox fx:id="contacts" layoutX="14.0" layoutY="450.0" onAction="#setContactsTable" prefHeight="25.0" prefWidth="128.0" />
+      <ComboBox fx:id="typeApt" layoutX="268.0" layoutY="60.0" onAction="#setByTypeTable" prefHeight="25.0" prefWidth="128.0" />
+      <DatePicker fx:id="month" layoutX="413.0" layoutY="60.0" onAction="#setAptByMonthTable" prefHeight="25.0" prefWidth="128.0" />
+
+   </children>
+</AnchorPane>

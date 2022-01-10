@@ -7,11 +7,16 @@ import utilities.JDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
+import model.Appointment;
 
 public class Data {
 
@@ -24,7 +29,7 @@ public class Data {
         String query = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES ("
                 + appointment.getId() + ", '"
                 + appointment.getTitle() + "', '" + appointment.getDescription() + "', '"
-                + appointment.getLocation() + "', '" + appointment.getType() + "', '" + appointment.getStart() + "', '" + appointment.getEnd() + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + appointment.getContact() + ");";
+                + appointment.getLocation() + "', '" + appointment.getType() + "', '" + Timestamp.valueOf(appointment.getStart()) + "', '" + Timestamp.valueOf(appointment.getEnd()) + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + appointment.getContact() + ");";
         stm.executeUpdate(query);
     }
     /**SQL query to remove apt from main menu screen*/
@@ -63,10 +68,11 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
+
             emptyList.add(appointment);
         }
         stm.close();
@@ -88,8 +94,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);
@@ -113,8 +119,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);
@@ -240,17 +246,18 @@ public class Data {
     }
     /**method to prompt 15 min apt alert*/
     public static Appointment appointment15MinAlert() {
+        DateFormat writeFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");
         Appointment appointment;
         LocalDateTime now = LocalDateTime.now();
+//        writeFormat.format(now);
         ZoneId zid = ZoneId.systemDefault();
         ZonedDateTime zdt = now.atZone(zid);
         LocalDateTime ldt = zdt.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+        ldt = ldt.truncatedTo(ChronoUnit.SECONDS);
         LocalDateTime ldt2 = ldt.plusMinutes(15);
-        int user = Login.returnUser();
         try {
             Statement statement = JDBC.getConnection().createStatement();
-            String query = "SELECT * FROM appointment WHERE start BETWEEN '" + ldt + "' AND '" + ldt2 + "' AND " +
-                    "contact=" + user + ";";
+            String query = "SELECT * FROM appointments WHERE start BETWEEN '" + ldt + "' AND '" + ldt2 + "';";
             ResultSet rs = statement.executeQuery(query);
             if(rs.next()) {
                 appointment = new Appointment(rs.getInt("Appointment_ID"),
@@ -259,8 +266,8 @@ public class Data {
                         rs.getString("Location"),
                         rs.getString("Contact_ID"),
                         rs.getString("Type"),
-                        rs.getString("Start"),
-                        rs.getString("End"),
+                        rs.getTimestamp("Start").toLocalDateTime(),
+                        rs.getTimestamp("End").toLocalDateTime(),
                         rs.getInt("Customer_ID"),
                         rs.getInt("User_ID"));
                 return appointment;
@@ -284,8 +291,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);
@@ -335,8 +342,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);
