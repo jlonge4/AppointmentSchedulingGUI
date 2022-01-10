@@ -24,10 +24,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,8 +50,9 @@ public class Login implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("It works");
         Locale locate = Locale.getDefault();
+        ZoneId z = ZoneId.systemDefault();
         ResourceBundle rb = ResourceBundle.getBundle("languageFiles/rb" , locate);
-        location.setText(String.valueOf(locate));
+        location.setText(String.valueOf(z));
         user.setText(rb.getString("username"));
         pass.setText(rb.getString("password"));
         login.setText(rb.getString("login"));

@@ -21,6 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,10 +47,12 @@ public class AddAppointment implements Initializable {
     public ComboBox typeCombo;
     private Appointment appointment;
     private ObservableList<String> contacts = FXCollections.observableArrayList();
-    ObservableList<String> hours = FXCollections.observableArrayList("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+    ObservableList<String> hours = FXCollections.observableArrayList("08", "09", "10", "11",
+            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22");
     ObservableList<String> minutes = FXCollections.observableArrayList("00", "15", "30", "45");
     ObservableList<String> types = FXCollections.observableArrayList("Planning Session" , "New Appointment");
+    LocalDateTime startApt;
+    LocalDateTime endApt;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,7 +78,6 @@ public class AddAppointment implements Initializable {
                 setDisable(empty || date.compareTo(today) < 0 );
             }
         });
-
 
         start.setOnAction(event -> {
             LocalDate date = start.getValue();
@@ -126,15 +129,12 @@ public class AddAppointment implements Initializable {
     }
     /**save new apt*/
     public void onAppointmentSave(ActionEvent event) throws SQLException, IOException, NullPointerException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
         int appointmentId = randomId();
         String titleApt = "";
         String descriptionApt = "";
         String locationApt = "";
         String contactApt = "";
         String typeApt = "";
-        String startApt = "";
-        String endApt = "";
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
         try {
@@ -186,9 +186,10 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            String minuteOne =  String.valueOf(minutesOne.getSelectionModel().getSelectedItem());
-            LocalDateTime date = start.getValue().atTime(hoursOne.getSelectionModel().getSelectedIndex(), Integer.parseInt(minuteOne));
-            startApt = date.format(formatter);
+            int minuteOne =  Integer.parseInt((String) minutesOne.getSelectionModel().getSelectedItem());
+            int hourOne =  Integer.parseInt((String) hoursOne.getSelectionModel().getSelectedItem());
+            startApt = start.getValue().atTime(hourOne, minuteOne).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            System.out.println(startApt);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -196,9 +197,19 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            String minuteTwo =  String.valueOf(minutesTwo.getSelectionModel().getSelectedItem());
-            LocalDateTime date = end.getValue().atTime(hoursTwo.getSelectionModel().getSelectedIndex(), Integer.parseInt(minuteTwo));
-            endApt = date.format(formatter);
+            int minuteTwo =  Integer.parseInt((String) minutesTwo.getSelectionModel().getSelectedItem());
+            int hourTwo =  Integer.parseInt((String) hoursTwo.getSelectionModel().getSelectedItem());
+            endApt = end.getValue().atTime(hourTwo, minuteTwo).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+
+            int validateTimes = endApt.compareTo(startApt);
+            if(validateTimes <= 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Add Failed");
+                alert.setContentText("Appointment End Time must be After Appointment Start");
+                alert.showAndWait();
+                return;
+            }
+
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -222,7 +233,7 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            System.out.println(startApt + contactApt);
+            System.out.println(startApt);
             appointment = new Appointment(appointmentId, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -239,9 +250,19 @@ public class AddAppointment implements Initializable {
             alert.setContentText("Invalid appointment");
             alert.showAndWait();
         }
-
     }
-    public static boolean validate(Appointment appointment) {
+    /**validates new or modified apt*/
+    public static boolean validate(Appointment appointment) throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        emptyList=Data.getAllAppointments();
+        for (Appointment a:emptyList) {
+            if (appointment.getStart()==a.getStart() && appointment.getContact()==a.getContact() ||
+                    appointment.getEnd()==a.getEnd() && appointment.getContact()==a.getContact()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
         if (appointment.getId() == 0) {
             return false;
         } else if (appointment.getDescription() == "") {
@@ -254,11 +275,12 @@ public class AddAppointment implements Initializable {
             return false;
         } else if (appointment.getType() == "") {
             return false;
-        } else if (appointment.getStart() == "") {
-            return false;
-        } else if (appointment.getEnd() == "") {
-            return false;
-        } else if (appointment.getCustId() == 0) {
+//        } else if (appointment.getStart() == "") {
+//            return false;
+//        } else if (appointment.getEnd() == "") {
+//            return false;
+        }
+        else if (appointment.getCustId() == 0) {
             return false;
         } else if (appointment.getUserId() == 0) {
             return false;

@@ -7,11 +7,19 @@ import utilities.JDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimeZone;
+
+import model.Appointment;
 
 public class Data {
 
@@ -24,7 +32,7 @@ public class Data {
         String query = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES ("
                 + appointment.getId() + ", '"
                 + appointment.getTitle() + "', '" + appointment.getDescription() + "', '"
-                + appointment.getLocation() + "', '" + appointment.getType() + "', '" + appointment.getStart() + "', '" + appointment.getEnd() + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + appointment.getContact() + ");";
+                + appointment.getLocation() + "', '" + appointment.getType() + "', '" + Timestamp.valueOf(appointment.getStart()) + "', '" + Timestamp.valueOf(appointment.getEnd()) + "', " + appointment.getCustId() + "," + appointment.getUserId() + "," + appointment.getContact() + ");";
         stm.executeUpdate(query);
     }
     /**SQL query to remove apt from main menu screen*/
@@ -56,6 +64,23 @@ public class Data {
         String query = "Select * FROM appointments;";
         ResultSet rs = stm.executeQuery(query);
         while(rs.next()) {
+            LocalDateTime ldt = rs.getTimestamp("Start").toLocalDateTime();
+            ZonedDateTime zdt = ldt.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
+            ZonedDateTime utczdt = zdt.withZoneSameInstant(ZoneId.of("UTC"));
+            LocalDateTime ldtIn = utczdt.toLocalDateTime();
+            ZonedDateTime zdtOut = ldtIn.atZone(ZoneId.of("UTC"));
+            ZonedDateTime zdtOutToLocalTZ = zdtOut.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
+            LocalDateTime ldtOutFinal = zdtOutToLocalTZ.toLocalDateTime();
+
+            LocalDateTime ldtE = rs.getTimestamp("End").toLocalDateTime();
+            ZonedDateTime zdtE = ldtE.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
+            ZonedDateTime utczdtE = zdtE.withZoneSameInstant(ZoneId.of("UTC"));
+            LocalDateTime ldtInE = utczdtE.toLocalDateTime();
+            ZonedDateTime zdtOutE = ldtIn.atZone(ZoneId.of("UTC"));
+            ZonedDateTime zdtOutToLocalTZE = zdtOutE.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
+            LocalDateTime ldtOutFinalE = zdtOutToLocalTZE.toLocalDateTime();
+
+
             Appointment appointment = new Appointment (
                     rs.getInt("Appointment_ID"),
                     rs.getString("Title"),
@@ -63,10 +88,11 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    ldtOutFinal,
+                    ldtOutFinalE,
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
+
             emptyList.add(appointment);
         }
         stm.close();
@@ -88,8 +114,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);
@@ -113,8 +139,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);
@@ -245,12 +271,11 @@ public class Data {
         ZoneId zid = ZoneId.systemDefault();
         ZonedDateTime zdt = now.atZone(zid);
         LocalDateTime ldt = zdt.withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
+        ldt = ldt.truncatedTo(ChronoUnit.SECONDS);
         LocalDateTime ldt2 = ldt.plusMinutes(15);
-        int user = Login.returnUser();
         try {
             Statement statement = JDBC.getConnection().createStatement();
-            String query = "SELECT * FROM appointment WHERE start BETWEEN '" + ldt + "' AND '" + ldt2 + "' AND " +
-                    "contact=" + user + ";";
+            String query = "SELECT * FROM appointments WHERE start BETWEEN '" + ldt + "' AND '" + ldt2 + "';";
             ResultSet rs = statement.executeQuery(query);
             if(rs.next()) {
                 appointment = new Appointment(rs.getInt("Appointment_ID"),
@@ -259,8 +284,8 @@ public class Data {
                         rs.getString("Location"),
                         rs.getString("Contact_ID"),
                         rs.getString("Type"),
-                        rs.getString("Start"),
-                        rs.getString("End"),
+                        rs.getTimestamp("Start").toLocalDateTime(),
+                        rs.getTimestamp("End").toLocalDateTime(),
                         rs.getInt("Customer_ID"),
                         rs.getInt("User_ID"));
                 return appointment;
@@ -284,8 +309,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);
@@ -321,6 +346,7 @@ public class Data {
         }
 
     }
+    /**filter apts by type*/
     public static ObservableList<Appointment> filterAptType(String selection) throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
@@ -334,8 +360,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    rs.getString("Start"),
-                    rs.getString("End"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
             emptyList.add(appointment);

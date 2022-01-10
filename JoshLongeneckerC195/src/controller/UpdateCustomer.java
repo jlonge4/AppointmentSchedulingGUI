@@ -35,7 +35,7 @@ public class UpdateCustomer implements Initializable {
 
 
 
-
+    /**initialize update customer screen*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -70,7 +70,7 @@ public class UpdateCustomer implements Initializable {
 
 
     }
-
+    /**sets first level div combo content*/
     public void selectComboContent(ActionEvent event) throws SQLException {
         if (customerCountry.getSelectionModel().getSelectedItem().equals("US")) {
             customerState.setItems(Data.getList(1));
@@ -80,7 +80,7 @@ public class UpdateCustomer implements Initializable {
             customerState.setItems(Data.getList(3));
         }
     }
-
+    /**updates the new customer*/
     public void onSave (ActionEvent actionEvent) throws IOException, SQLException {
         int id = customerOld.getId();
         String name = "";
@@ -135,6 +135,7 @@ public class UpdateCustomer implements Initializable {
         Data.addCustomer(customerNew);
         MainMenu(actionEvent);
     }
+    /**navigates back to the main menu*/
     public void MainMenu (ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();

@@ -1,6 +1,7 @@
-Josh Longenecker
+Josh Longenecker jlonge4@wgu.edu
 *********************************************
-Scheduling application for WGU C195	
+Title and Purpose: Scheduling application for WGU C195 whose purpose is to create, read
+update, and delete customers and appointments that are maintained in an sql database.	
 *********************************************
 IntelliJ IDEA 2021.1.1 (Community Edition)
 Build #IC-211.7142.45, built on April 30, 2021
@@ -21,5 +22,5 @@ Generate Reports button allows 3 separate reports to be run.
 Additional report shows how many customers are currently scheduled for an appointment 
 or not scheduled at all.
 *********************************************
-MySQL version 8.0.25
+MySQL driver version 8.0.25
 mysql-connector-java-8.0.25

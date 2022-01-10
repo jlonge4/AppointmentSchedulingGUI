@@ -15,10 +15,13 @@ import model.Data;
 import javax.swing.text.DateFormatter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -43,8 +46,8 @@ public class ModifyAppointment implements Initializable {
     private static Appointment appointmentOld;
     private ObservableList<String> contacts = FXCollections.observableArrayList();
     ObservableList<String> types = FXCollections.observableArrayList("Planning Session" , "New Appointment");
-    ObservableList<String> hours = FXCollections.observableArrayList("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
+    ObservableList<String> hours = FXCollections.observableArrayList("08", "09", "10", "11",
+            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22");
     ObservableList<String> minutes = FXCollections.observableArrayList("00", "15", "30", "45");
 
     @Override
@@ -90,32 +93,14 @@ public class ModifyAppointment implements Initializable {
         location.setText(appointmentOld.getLocation());
         customerId.setText(String.valueOf(appointmentOld.getCustId()));
         typeCombo.setValue(appointmentOld.getType());
-
-        String dateTimeStart = appointmentOld.getStart();
-        dateTimeStart = dateTimeStart.substring(0,10);
-        LocalDate ld = LocalDate.parse(dateTimeStart);
-        start.setValue(ld);
-
-        String hOneTimeStart = appointmentOld.getStart();
-        hOneTimeStart = hOneTimeStart.substring(11,13);
-        hoursOne.setValue(hOneTimeStart);
-
-        String mOneTimeStart = appointmentOld.getStart();
-        mOneTimeStart = mOneTimeStart.substring(14,16);
-        minutesOne.setValue(mOneTimeStart);
-
-        String dateTimeEnd = appointmentOld.getEnd();
-        dateTimeEnd = dateTimeEnd.substring(0,10);
-        LocalDate ldE = LocalDate.parse(dateTimeEnd);
-        end.setValue(ldE);
-
-        String hOneTimeEnd = appointmentOld.getEnd();
-        hOneTimeEnd = hOneTimeEnd.substring(11,13);
-        hoursTwo.setValue(hOneTimeEnd);
-
-        String mOneTimeEnd = appointmentOld.getStart();
-        mOneTimeEnd = mOneTimeEnd.substring(14,16);
-        minutesTwo.setValue(mOneTimeEnd);
+        LocalDateTime oldAptStart = appointmentOld.getStart();
+        LocalDateTime oldAptEnd = appointmentOld.getEnd();
+        start.setValue(oldAptStart.toLocalDate());
+        end.setValue(oldAptEnd.toLocalDate());
+        hoursOne.getSelectionModel().select(String.valueOf(oldAptStart.getHour()));
+        minutesOne.getSelectionModel().select(String.valueOf(oldAptStart.getMinute()));
+        hoursTwo.getSelectionModel().select(String.valueOf(oldAptEnd.getHour()));
+        minutesTwo.getSelectionModel().select(String.valueOf(oldAptEnd.getMinute()));
 
         try {
             for(String s: Data.getContacts()) {
@@ -125,7 +110,6 @@ public class ModifyAppointment implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         try {
             contact.getSelectionModel().select(Data.getContactsByID(appointmentOld.getContact()));
         } catch (SQLException throwables) {
@@ -143,15 +127,14 @@ public class ModifyAppointment implements Initializable {
     }
     /**saves modified apt*/
     public void onAppointmentSave(ActionEvent event) throws SQLException, IOException, NullPointerException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00");
         int appointmentIdNew = Integer.parseInt(appointmentId.getText());
         String titleApt = "";
         String descriptionApt = "";
         String locationApt = "";
         String contactApt = "";
         String typeApt = "";
-        String startApt = "";
-        String endApt = "";
+        LocalDateTime startApt = null;
+        LocalDateTime endApt = null;
         int custIdApt = 0;
         int userIdApt = Login.returnUser();
 
@@ -204,9 +187,10 @@ public class ModifyAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            String minuteOne =  String.valueOf(minutesOne.getSelectionModel().getSelectedItem());
-            LocalDateTime date = start.getValue().atTime(hoursOne.getSelectionModel().getSelectedIndex(), Integer.parseInt(minuteOne));
-            startApt = date.format(formatter);
+            int minuteOne =  Integer.parseInt((String) minutesOne.getSelectionModel().getSelectedItem());
+            int hourOne =  Integer.parseInt((String) hoursOne.getSelectionModel().getSelectedItem());
+            startApt = start.getValue().atTime(hourOne, minuteOne).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            System.out.println(startApt);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -214,9 +198,18 @@ public class ModifyAppointment implements Initializable {
             alert.showAndWait();
         }
         try {
-            String minuteTwo =  String.valueOf(minutesTwo.getSelectionModel().getSelectedItem());
-            LocalDateTime date = end.getValue().atTime(hoursTwo.getSelectionModel().getSelectedIndex(), Integer.parseInt(minuteTwo));
-            endApt = date.format(formatter);
+            int minuteTwo =  Integer.parseInt((String) minutesTwo.getSelectionModel().getSelectedItem());
+            int hourTwo =  Integer.parseInt((String) hoursTwo.getSelectionModel().getSelectedItem());
+            endApt = end.getValue().atTime(hourTwo, minuteTwo).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            int validateTimes = endApt.compareTo(startApt);
+            if(validateTimes <= 0) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Add Failed");
+                alert.setContentText("Appointment End Time must be After Appointment Start");
+                alert.showAndWait();
+                return;
+            }
+            System.out.println(endApt);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
