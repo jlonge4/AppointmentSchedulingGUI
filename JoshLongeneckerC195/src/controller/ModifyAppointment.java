@@ -19,9 +19,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -189,8 +187,10 @@ public class ModifyAppointment implements Initializable {
         try {
             int minuteOne =  Integer.parseInt((String) minutesOne.getSelectionModel().getSelectedItem());
             int hourOne =  Integer.parseInt((String) hoursOne.getSelectionModel().getSelectedItem());
-            startApt = start.getValue().atTime(hourOne, minuteOne).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
-            System.out.println(startApt);
+            LocalDateTime startAptT = start.getValue().atTime(hourOne, minuteOne).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            ZonedDateTime ldtZoned = startAptT.atZone(ZoneId.systemDefault());
+            ZonedDateTime utczdtE = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
+            startApt = utczdtE.toLocalDateTime();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -200,7 +200,11 @@ public class ModifyAppointment implements Initializable {
         try {
             int minuteTwo =  Integer.parseInt((String) minutesTwo.getSelectionModel().getSelectedItem());
             int hourTwo =  Integer.parseInt((String) hoursTwo.getSelectionModel().getSelectedItem());
-            endApt = end.getValue().atTime(hourTwo, minuteTwo).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            LocalDateTime endAptT = end.getValue().atTime(hourTwo, minuteTwo).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            ZonedDateTime ldtZoned = endAptT.atZone(ZoneId.systemDefault());
+            ZonedDateTime utczdtE = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
+            endApt = utczdtE.toLocalDateTime();
+
             int validateTimes = endApt.compareTo(startApt);
             if(validateTimes <= 0) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -234,12 +238,20 @@ public class ModifyAppointment implements Initializable {
         }
         try {
             System.out.println(startApt);
-            appointmentNew = new Appointment(appointmentIdNew, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
+
+                appointmentNew = new Appointment(appointmentIdNew, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
+
             if (AddAppointment.validate(appointmentNew)) {
-                System.out.println(appointmentIdNew + titleApt + descriptionApt + locationApt + contactApt + typeApt + startApt + endApt + custIdApt + userIdApt);
+                if(Data.validateOverlap(appointmentNew)) {
                     Data.removeAppointment(appointmentOld);
                     Data.addAppointment(appointmentNew);
                     MainMenu(event);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Add Failed");
+                    alert.setContentText("Overlapping Appointment");
+                    alert.showAndWait();
+                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Add Failed");

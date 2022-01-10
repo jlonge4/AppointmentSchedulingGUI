@@ -56,6 +56,7 @@ public class GenerateReports implements Initializable {
     public RadioButton nonScheduled;
     public ComboBox typeApt;
     public DatePicker month;
+    public Label typeCount;
     private ObservableList<String> contactsList = FXCollections.observableArrayList();
     ObservableList<String> types = FXCollections.observableArrayList("Planning Session" , "New Appointment");
 
@@ -74,6 +75,7 @@ public class GenerateReports implements Initializable {
         try {
             contacts.setItems(Data.getContacts());
             AppointmentTableTwo.setItems(Data.getAllAppointments());
+            AppointmentTable.setItems(Data.getAllAppointments());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -131,12 +133,6 @@ public class GenerateReports implements Initializable {
         emptyList = Data.getContactsReports(selection);
         AppointmentTableTwo.setItems(emptyList);
     }
-    /**set apt table by months apts*/
-    public void setAptByMonthTable() throws SQLException {
-        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
-        AppointmentTable.setItems(emptyList);
-            AppointmentTable.setItems(Data.getMonthAppointments());
-    }
     /**set customer table by nonscheduled or scheduled*/
     public void setCustomerAptTable() throws SQLException {
         if (scheduled.isSelected()) {
@@ -150,8 +146,13 @@ public class GenerateReports implements Initializable {
     /**Set apt table by type of apt*/
     public void setByTypeTable() throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
-        AppointmentTable.setItems(emptyList);
-        AppointmentTable.setItems(Data.filterAptType((String) typeApt.getSelectionModel().getSelectedItem()));
+        if(typeApt.getSelectionModel().getSelectedItem()!=null && month.getValue()!=null) {
+            emptyList = Data.filterAptType((String.valueOf(typeApt.getSelectionModel().getSelectedItem())), String.valueOf(month.getValue().getMonth()));
+            AppointmentTable.setItems(emptyList);
+            typeCount.setText("There are " + emptyList.size() + " appointment(s) of type " + typeApt.getSelectionModel().getSelectedItem() + " in " + month.getValue().getMonth());
+        } else {
+            typeCount.setText("Please make a selection to filter all appointments");
+        }
 
     }
 

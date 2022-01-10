@@ -19,10 +19,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -188,7 +185,10 @@ public class AddAppointment implements Initializable {
         try {
             int minuteOne =  Integer.parseInt((String) minutesOne.getSelectionModel().getSelectedItem());
             int hourOne =  Integer.parseInt((String) hoursOne.getSelectionModel().getSelectedItem());
-            startApt = start.getValue().atTime(hourOne, minuteOne).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            LocalDateTime startAptT = start.getValue().atTime(hourOne, minuteOne).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            ZonedDateTime ldtZoned = startAptT.atZone(ZoneId.systemDefault());
+            ZonedDateTime utczdtE = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
+            startApt = utczdtE.toLocalDateTime();
             System.out.println(startApt);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -199,7 +199,10 @@ public class AddAppointment implements Initializable {
         try {
             int minuteTwo =  Integer.parseInt((String) minutesTwo.getSelectionModel().getSelectedItem());
             int hourTwo =  Integer.parseInt((String) hoursTwo.getSelectionModel().getSelectedItem());
-            endApt = end.getValue().atTime(hourTwo, minuteTwo).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            LocalDateTime endAptT = end.getValue().atTime(hourTwo, minuteTwo).atZone(ZoneOffset.systemDefault()).toLocalDateTime();
+            ZonedDateTime ldtZoned = endAptT.atZone(ZoneId.systemDefault());
+            ZonedDateTime utczdtE = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
+            endApt = utczdtE.toLocalDateTime();
 
             int validateTimes = endApt.compareTo(startApt);
             if(validateTimes <= 0) {
@@ -209,7 +212,6 @@ public class AddAppointment implements Initializable {
                 alert.showAndWait();
                 return;
             }
-
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -234,7 +236,7 @@ public class AddAppointment implements Initializable {
         }
         try {
             System.out.println(startApt);
-            appointment = new Appointment(appointmentId, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
+                appointment = new Appointment(appointmentId, titleApt, descriptionApt, locationApt, contactApt, typeApt, startApt, endApt, custIdApt, userIdApt);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -242,8 +244,15 @@ public class AddAppointment implements Initializable {
             alert.showAndWait();
         }
         if (validate(appointment)) {
+            if(Data.validateOverlap(appointment)) {
             Data.addAppointment(appointment);
             MainMenu(event);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Add Failed");
+                alert.setContentText("Overlapping Appointment");
+                alert.showAndWait();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Add Failed");
@@ -275,12 +284,7 @@ public class AddAppointment implements Initializable {
             return false;
         } else if (appointment.getType() == "") {
             return false;
-//        } else if (appointment.getStart() == "") {
-//            return false;
-//        } else if (appointment.getEnd() == "") {
-//            return false;
-        }
-        else if (appointment.getCustId() == 0) {
+        } else if (appointment.getCustId() == 0) {
             return false;
         } else if (appointment.getUserId() == 0) {
             return false;

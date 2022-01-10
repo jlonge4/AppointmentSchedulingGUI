@@ -94,7 +94,7 @@
             <DropShadow />
          </effect>
       </Label>
-      <Label layoutX="134.0" layoutY="65.0" text="Filter By Type or Month:">
+      <Label layoutX="134.0" layoutY="65.0" text="Filter By Type and Month:">
          <font>
             <Font name="Microsoft Sans Serif" size="12.0" />
          </font>
@@ -114,7 +114,8 @@
       <RadioButton fx:id="nonScheduled" layoutX="107.0" layoutY="256.0" mnemonicParsing="false" onAction="#setCustomerAptTable" text="Non-Scheduled" toggleGroup="$group2" />
       <ComboBox fx:id="contacts" layoutX="14.0" layoutY="450.0" onAction="#setContactsTable" prefHeight="25.0" prefWidth="128.0" />
       <ComboBox fx:id="typeApt" layoutX="268.0" layoutY="60.0" onAction="#setByTypeTable" prefHeight="25.0" prefWidth="128.0" />
-      <DatePicker fx:id="month" layoutX="413.0" layoutY="60.0" onAction="#setAptByMonthTable" prefHeight="25.0" prefWidth="128.0" />
+      <DatePicker fx:id="month" layoutX="413.0" layoutY="60.0" onAction="#setByTypeTable" prefHeight="25.0" prefWidth="128.0" />
+      <Label fx:id="typeCount" layoutX="293.0" layoutY="41.0" text="Please make a type and month selection:" />
 
    </children>
 </AnchorPane>

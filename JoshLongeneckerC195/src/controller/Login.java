@@ -74,7 +74,7 @@ public class Login implements Initializable {
                     int Id = Login.returnUser();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Upcoming Appointments");
-                    alert.setContentText("You (USER#" + Id + ") have an appointment(ID#" + appointment.getId() + ") scheduled to start at" + appointment.getStart() + " !");
+                    alert.setContentText("You (USER#" + Id + ") have an appointment(ID#" + appointment.getId() + ") scheduled to start at " + appointment.getStart() + " !");
                     alert.showAndWait();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

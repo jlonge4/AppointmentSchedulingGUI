@@ -64,23 +64,6 @@ public class Data {
         String query = "Select * FROM appointments;";
         ResultSet rs = stm.executeQuery(query);
         while(rs.next()) {
-            LocalDateTime ldt = rs.getTimestamp("Start").toLocalDateTime();
-            ZonedDateTime zdt = ldt.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
-            ZonedDateTime utczdt = zdt.withZoneSameInstant(ZoneId.of("UTC"));
-            LocalDateTime ldtIn = utczdt.toLocalDateTime();
-            ZonedDateTime zdtOut = ldtIn.atZone(ZoneId.of("UTC"));
-            ZonedDateTime zdtOutToLocalTZ = zdtOut.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
-            LocalDateTime ldtOutFinal = zdtOutToLocalTZ.toLocalDateTime();
-
-            LocalDateTime ldtE = rs.getTimestamp("End").toLocalDateTime();
-            ZonedDateTime zdtE = ldtE.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
-            ZonedDateTime utczdtE = zdtE.withZoneSameInstant(ZoneId.of("UTC"));
-            LocalDateTime ldtInE = utczdtE.toLocalDateTime();
-            ZonedDateTime zdtOutE = ldtIn.atZone(ZoneId.of("UTC"));
-            ZonedDateTime zdtOutToLocalTZE = zdtOutE.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
-            LocalDateTime ldtOutFinalE = zdtOutToLocalTZE.toLocalDateTime();
-
-
             Appointment appointment = new Appointment (
                     rs.getInt("Appointment_ID"),
                     rs.getString("Title"),
@@ -88,8 +71,8 @@ public class Data {
                     rs.getString("Location"),
                     rs.getString("Contact_ID"),
                     rs.getString("Type"),
-                    ldtOutFinal,
-                    ldtOutFinalE,
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"));
 
@@ -299,9 +282,9 @@ public class Data {
     public static ObservableList<Appointment> getContactsReports(int selection) throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
-        String query = "SELECT * FROM appointments WHERE contact_ID=" + selection + ";";
+        String query = "SELECT * FROM appointments WHERE Contact_ID=" + selection + ";";
         ResultSet rs = stm.executeQuery(query);
-        if(rs.next()) {
+        while(rs.next()) {
             Appointment appointment;
             appointment = new Appointment(rs.getInt("Appointment_ID"),
                     rs.getString("Title"),
@@ -316,6 +299,7 @@ public class Data {
             emptyList.add(appointment);
         }
         stm.close();
+        System.out.println(emptyList.size());
         return emptyList;
     }
     /**lambda expression to add customer Ids from scheduled apts into a set to ensure no redundant data, used later to compare customer Ids to all customers Ids*/
@@ -347,10 +331,10 @@ public class Data {
 
     }
     /**filter apts by type*/
-    public static ObservableList<Appointment> filterAptType(String selection) throws SQLException {
+    public static ObservableList<Appointment> filterAptType(String selection, String month) throws SQLException {
         ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
         Statement stm = JDBC.getConnection().createStatement();
-        String query = "Select * FROM appointments WHERE Type='" + selection + "';";
+        String query = "SELECT * FROM appointments WHERE monthname(Start)='" + month + "' AND Type='" + selection + "';";
         ResultSet rs = stm.executeQuery(query);
         while(rs.next()) {
             Appointment appointment = new Appointment (
@@ -368,6 +352,48 @@ public class Data {
         }
         stm.close();
         return emptyList;
+    }
+    /**validate created or modified apt overlap*/
+    public static boolean validateOverlap(Appointment b) throws SQLException {
+        ObservableList<Appointment> emptyList = FXCollections.observableArrayList();
+        Statement stm = JDBC.getConnection().createStatement();
+        String query = "SELECT * FROM appointments;";
+        ResultSet rs = stm.executeQuery(query);
+        while(rs.next()) {
+            Appointment appointment = new Appointment (
+                    rs.getInt("Appointment_ID"),
+                    rs.getString("Title"),
+                    rs.getString("Description"),
+                    rs.getString("Location"),
+                    rs.getString("Contact_ID"),
+                    rs.getString("Type"),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
+                    rs.getInt("Customer_ID"),
+                    rs.getInt("User_ID"));
+            emptyList.add(appointment);
+        }
+        stm.close();
+        boolean valid = false;
+        int One = 12;
+        int Two = 1;
+        int Three = 5;
+        for (Appointment a : emptyList) {
+            LocalDateTime bStart = b.getStart();
+            ZonedDateTime zdtOut = bStart.atZone(ZoneId.of("UTC"));
+            ZonedDateTime zdtOutToLocalTZ = zdtOut.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
+            LocalDateTime ldtOutFinal = zdtOutToLocalTZ.toLocalDateTime();
+            One = Integer.parseInt(a.getContact());
+            Two = Integer.parseInt(b.getContact());
+            Three = One - Two;
+
+            if (ldtOutFinal.isAfter(a.getStart()) && ldtOutFinal.isBefore(a.getEnd()) && Three==0 ) {
+                valid = false;
+            } else {
+                valid = true;
+            }
+        }
+        return valid;
     }
 
 }
